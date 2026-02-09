@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مهندس أحمد السيد | كتب برمجة للصف الأول الثانوي</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Google Fonts (Cairo) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #198754;
+            --dark-color: #212529;
+            --light-color: #f8f9fa;
+            --gray-color: #6c757d;
+            --warning-color: #ffc107;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--light-color);
+        }
+
+        /* --- Global Styles --- */
+        .page-section {
+            display: none; /* Hide all sections by default */
+            min-height: calc(100vh - 56px); /* Full height minus navbar */
+            padding-top: 80px; /* Offset for fixed navbar */
+        }
+        .page-section.active {
+            display: block; /* Show only the active section */
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            padding: 1rem 0;
+        }
+        .navbar-brand {
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--dark-color) !important;
+            display: flex;
+            align-items: center;
+        }
+        .navbar-brand i { color: var(--primary-color); margin-left: 8px; }
+        .nav-link { font-weight: 600; color: var(--dark-color) !important; margin: 0 10px; transition: color 0.3s; cursor: pointer; }
+        .nav-link:hover, .nav-link.active { color: var(--primary-color) !important; }
+        
+        /* Shared Cart Icon Styles */
+        .cart-icon { 
+            font-size: 1.5rem; 
+            color: var(--dark-color); 
+            cursor: pointer; 
+            position: relative; 
+            display: flex; /* Use flex to align icon and badge */
+            align-items: center;
+            justify-content: center;
+        }
+        .cart-badge {
+            position: absolute; top: -8px; left: -12px; background-color: var(--secondary-color);
+            color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; font-weight: 700;
+        }
+
+        /* --- Home Page Styles --- */
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://blogger.googleusercontent.com/img/a/AVvXsEimCazvFzjmxZ8cTISnB_xSApqE5vTZSwvGe8OA8Vmwtn7wRWffC0gWoYspy5fxJFisJ_7Is5hdwqfOGp77gkNDhS4EGP4Nj_I1WguUU7pcu0Lyb-JIJrHYm3yCakuQiLng9X7eWFNJKKHcNlsBdkN91U7XPcwxwLpPUOWO0D1epa5DDjhbMQ7Rli8gwA');
+            background-size: cover;
+            background-position: center;
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+        .hero-content h1 { font-weight: 900; font-size: 3.5rem; margin-bottom: 1.5rem; text-shadow: 2px 2px 8px rgba(0,0,0,0.7); }
+        .hero-content p { font-size: 1.4rem; font-weight: 400; max-width: 700px; margin: 0 auto 2.5rem auto; line-height: 1.8; }
+        .btn-hero {
+            background-color: var(--secondary-color); color: white; padding: 15px 40px;
+            font-size: 1.2rem; font-weight: 700; border: none; border-radius: 50px;
+            transition: all 0.3s ease; text-decoration: none; display: inline-block;
+        }
+        .btn-hero:hover { background-color: #157347; color: white; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+
+        /* --- Books Page Styles --- */
+        .page-header { background-color: white; padding: 2rem 0; margin-bottom: 2rem; border-bottom: 1px solid #dee2e6; }
+        .page-header h1 { font-weight: 900; color: var(--dark-color); }
+        .controls-section { background-color: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        .search-input { border-radius: 50px; padding: 10px 20px; border: 1px solid #ced4da; font-weight: 600; }
+        .btn-filter { background-color: var(--primary-color); color: white; border: none; border-radius: 50px; padding: 10px 25px; font-weight: 700; transition: all 0.3s; }
+        .btn-filter:hover { background-color: #0b5ed7; color: white; }
+
+        /* Filter Sidebar */
+        .filter-sidebar { position: fixed; top: 0; right: -350px; width: 350px; height: 100%; background-color: white; box-shadow: -5px 0 15px rgba(0,0,0,0.1); padding: 2rem; transition: right 0.4s ease; z-index: 1050; overflow-y: auto; }
+        .filter-sidebar.active { right: 0; }
+        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1040; display: none; }
+        .sidebar-overlay.active { display: block; }
+        .filter-group { margin-bottom: 1.5rem; }
+        .filter-group h5 { font-weight: 700; margin-bottom: 1rem; color: var(--dark-color); }
+        .form-check { margin-bottom: 0.75rem; }
+        .form-check-input:checked { background-color: var(--primary-color); border-color: var(--primary-color); }
+        .form-check-label { font-weight: 600; cursor: pointer; }
+
+        /* Book Card */
+        .book-card { background-color: white; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); padding: 1.5rem; margin-bottom: 2rem; transition: transform 0.3s, box-shadow 0.3s; height: 100%; display: flex; flex-direction: column; }
+        .book-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.12); }
+        .book-card .card-icon { font-size: 3rem; color: var(--primary-color); text-align: center; margin-bottom: 1rem; }
+        .book-card .card-title { font-weight: 800; font-size: 1.3rem; color: var(--dark-color); text-align: center; margin-bottom: 1rem; }
+        .book-card .tags { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .book-card .tag { background-color: #e9ecef; color: var(--gray-color); padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; }
+        .book-card .info-list { list-style: none; padding: 0; margin-bottom: 1.5rem; flex-grow: 1; }
+        .book-card .info-list li { font-weight: 600; color: var(--gray-color); margin-bottom: 0.5rem; display: flex; justify-content: space-between; }
+        .book-card .info-list li i { color: var(--primary-color); margin-left: 0.5rem; }
+        .book-card .price { font-size: 1.8rem; font-weight: 900; color: var(--secondary-color); text-align: center; margin-bottom: 1.5rem; }
+        .book-card .card-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .book-card .btn-card { flex: 1; min-width: 100px; padding: 0.75rem; font-weight: 700; border-radius: 10px; border: none; transition: all 0.3s; }
+        .btn-preview { background-color: #17a2b8; color: white; }
+        .btn-preview:hover { background-color: #138496; color: white; }
+        .btn-details { background-color: #6c757d; color: white; }
+        .btn-details:hover { background-color: #5a6268; color: white; }
+        .btn-add-cart { background-color: var(--secondary-color); color: white; }
+        .btn-add-cart:hover { background-color: #157347; color: white; }
+
+        /* --- Payment Page Styles --- */
+        .payment-steps { background-color: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); margin-bottom: 2rem; }
+        .payment-steps h2 { font-weight: 900; color: var(--dark-color); text-align: center; margin-bottom: 2rem; }
+        .step { display: flex; align-items: flex-start; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px dashed #dee2e6; }
+        .step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .step-number { background-color: var(--primary-color); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; margin-left: 1.5rem; flex-shrink: 0; }
+        .step-content h4 { font-weight: 700; color: var(--dark-color); margin-bottom: 0.5rem; }
+        .step-content p { font-weight: 600; color: var(--gray-color); margin: 0; line-height: 1.8; }
+        .step-content .vodafone-number { font-size: 1.5rem; font-weight: 800; color: var(--secondary-color); background-color: #e9f5e9; padding: 0.5rem 1rem; border-radius: 10px; display: inline-block; margin-top: 0.5rem; }
+        .step-content .vodafone-number i { margin-left: 8px; }
+        .policies-section { background-color: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); margin-bottom: 2rem; }
+        .policies-section h3 { font-weight: 800; color: var(--dark-color); margin-bottom: 1.5rem; border-right: 5px solid var(--warning-color); padding-right: 1rem; }
+        .policies-section p { font-weight: 600; line-height: 1.9; color: #495057; }
+        .form-container { background-color: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+        .form-container h3 { font-weight: 800; color: var(--dark-color); margin-bottom: 1.5rem; text-align: center; }
+
+        /* --- Global Elements (Cart, Modal, Toast) --- */
+        .cart-sidebar { position: fixed; top: 0; left: -400px; width: 400px; height: 100%; background-color: white; box-shadow: 5px 0 15px rgba(0,0,0,0.1); padding: 2rem; transition: left 0.4s ease; z-index: 1060; display: flex; flex-direction: column; }
+        .cart-sidebar.active { left: 0; }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid var(--light-color); }
+        .cart-header h4 { font-weight: 800; }
+        .cart-items { flex-grow: 1; overflow-y: auto; margin-bottom: 1.5rem; }
+        .cart-item { display: flex; align-items: center; padding: 1rem; background-color: var(--light-color); border-radius: 10px; margin-bottom: 1rem; }
+        .cart-item-details { flex-grow: 1; }
+        .cart-item-title { font-weight: 700; margin-bottom: 0.25rem; }
+        .cart-item-price { color: var(--secondary-color); font-weight: 800; }
+        .cart-footer { border-top: 2px solid var(--light-color); padding-top: 1rem; }
+        .cart-total { display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: 800; margin-bottom: 1rem; }
+        .cart-actions .btn { width: 100%; margin-bottom: 0.5rem; font-weight: 700; }
+        .btn-copy { background-color: var(--gray-color); color: white; }
+        .btn-copy:hover { background-color: #5a6268; color: white; }
+        .btn-checkout { background-color: var(--secondary-color); color: white; }
+        .btn-checkout:hover { background-color: #157347; color: white; }
+        .btn-checkout:disabled { background-color: #ccc; cursor: not-allowed; }
+        
+        .modal-header { background-color: var(--primary-color); color: white; }
+        .modal-header .btn-close { filter: invert(1); }
+        .modal-body ul { list-style: none; padding: 0; }
+        .modal-body ul li { font-weight: 600; margin-bottom: 1rem; display: flex; align-items: flex-start; }
+        .modal-body ul li i { color: var(--secondary-color); margin-left: 10px; font-size: 1.2rem; flex-shrink: 0; }
+        
+        .toast-container { position: fixed; top: 100px; left: 20px; z-index: 1080; }
+        .toast { font-weight: 600; }
+        
+        .footer { background-color: var(--dark-color); color: white; text-align: center; padding: 20px 0; margin-top: 3rem; }
+        .footer a { color: var(--secondary-color); text-decoration: none; font-weight: 600; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .hero-content p { font-size: 1.1rem; }
+            .navbar-brand { font-size: 1.2rem; }
+            
+            /* Corrected cart sidebar animation for mobile */
+            .cart-sidebar {
+                width: 100%;
+                left: -100%; /* Slide from left */
+                right: auto;
+            }
+            .cart-sidebar.active {
+                left: 0;
+            }
+
+            /* Filter sidebar remains the same */
+            .filter-sidebar { 
+                width: 100%; 
+                right: -100%; /* Slide from right */
+                left: auto; 
+            }
+            .filter-sidebar.active { 
+                right: 0; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="showPage('home-page')">
+                <i class="bi bi-code-square"></i>
+                مهندس أحمد السيد
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Mobile Cart Icon: Visible only on small screens -->
+            <div class="cart-icon d-lg-none me-3" onclick="toggleCart()">
+                <i class="bi bi-cart3"></i>
+                <span class="cart-badge" id="cart-count">0</span>
+            </div>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" onclick="showPage('home-page')">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="showPage('books-page')">الكتب</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://wa.me/201501021670" target="_blank">دعم فني</a>
+                    </li>
+                </ul>
+                <!-- Desktop Cart Icon: Visible only on large screens and up -->
+                <div class="cart-icon d-none d-lg-flex ms-3" onclick="toggleCart()">
+                    <i class="bi bi-cart3"></i>
+                    <span class="cart-badge" id="cart-count-desktop">0</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main>
+        <!-- 1. Home Page Section -->
+        <section id="home-page" class="page-section active">
+            <header class="hero-section">
+                <div class="hero-content">
+                    <h1>احترف البرمجة من الصف الأول الثانوي</h1>
+                    <p>انطلق في رحلتك لتصبح مبرمجًا محترفًا مع مجموعة كتب شاملة ومتكاملة. شرح مفصل، أمثلة عملية، وأسئلة امتحانات تجعلك متفوقًا في دراستك.</p>
+                    <a class="btn-hero" onclick="showPage('books-page')">تصفح الكتب الآن</a>
+                </div>
+            </header>
+            <footer class="footer">
+                <div class="container">
+                    <p>&copy; 2024 مهندس أحمد السيد. جميع الحقوق محفوظة.</p>
+                    <p>للدعم الفني تواصل معنا عبر <a href="https://wa.me/201501021670" target="_blank">واتساب</a></p>
+                </div>
+            </footer>
+        </section>
+
+        <!-- 2. Books Page Section -->
+        <section id="books-page" class="page-section">
+            <div class="container">
+                <div class="page-header">
+                    <h1>مكتبة الكتب</h1>
+                    <p class="lead">اختر الكتاب المناسب لك وابدأ رحلتك نحو التفوق</p>
+                </div>
+
+                <!-- Search and Filter -->
+                <div class="controls-section">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-md-8">
+                            <input type="text" class="form-control search-input" id="searchInput" placeholder="ابحث عن كتاب...">
+                        </div>
+                        <div class="col-md-4 text-md-start text-center">
+                            <button class="btn btn-filter" onclick="toggleFilterSidebar()">
+                                <i class="bi bi-funnel"></i> فلترة النتائج
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Books Grid -->
+                <div class="row" id="books-container">
+                    <!-- Book Card 1 (Term 1) -->
+                    <div class="col-lg-6 book-item" data-title="مجموعة كتب الترم الاول" data-term="الترم الاول" data-price="مدفوع">
+                        <div class="book-card">
+                            <div class="card-icon"><i class="bi bi-book-half"></i></div>
+                            <h3 class="card-title">مجموعة كتب الترم الاول</h3>
+                            <div class="tags"><span class="tag">الاول الثانوي</span><span class="tag">الترم الاول</span><span class="tag">مدفوع</span></div>
+                            <ul class="info-list"><li><i class="bi bi-person"></i> <span>مهندس أحمد السيد</span></li><li><i class="bi bi-download"></i> <span>260 تحميل</span></li></ul>
+                            <div class="price">70 ج</div>
+                            <div class="card-actions">
+                                <button class="btn btn-card btn-preview" onclick="window.open('https:/drive.google.com/file/d/1RWWkP_kD0WHCEQJtf-KX93FYVbD6Zpho/view?usp=sharing', '_blank')"><i class="bi bi-eye"></i> معاينة</button>
+                                <button class="btn btn-card btn-details" onclick="showDetails('term1')"><i class="bi bi-info-circle"></i> تفاصيل</button>
+                                <button class="btn btn-card btn-add-cart" onclick="addToCart('مجموعة كتب الترم الاول', 70)"><i class="bi bi-cart-plus"></i> إضافة للسلة</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Book Card 2 (Term 2) -->
+                    <div class="col-lg-6 book-item" data-title="مجموعة كتب الترم الثاني" data-term="الترم الثاني" data-price="مدفوع">
+                        <div class="book-card">
+                            <div class="card-icon"><i class="bi bi-book-half"></i></div>
+                            <h3 class="card-title">مجموعة كتب الترم الثاني</h3>
+                            <div class="tags"><span class="tag">الاول الثانوي</span><span class="tag">الترم الثاني</span><span class="tag">مدفوع</span></div>
+                            <ul class="info-list"><li><i class="bi bi-person"></i> <span>مهندس أحمد السيد</span></li><li><i class="bi bi-download"></i> <span>64 تحميل</span></li></ul>
+                            <div class="price">70 ج</div>
+                            <div class="card-actions">
+                                <button class="btn btn-card btn-preview" onclick="window.open('https:/drive.google.com/file/d/1I7ETKP-ikPNUTxOjsbLPNa65mQv0Zj3Y/view?usp=sharing', '_blank')"><i class="bi bi-eye"></i> معاينة</button>
+                                <button class="btn btn-card btn-details" onclick="showDetails('term2')"><i class="bi bi-info-circle"></i> تفاصيل</button>
+                                <button class="btn btn-card btn-add-cart" onclick="addToCart('مجموعة كتب الترم الثاني', 70)"><i class="bi bi-cart-plus"></i> إضافة للسلة</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Payment Page Section -->
+        <section id="payment-page" class="page-section">
+            <div class="container">
+                <!-- Payment Steps -->
+                <section class="payment-steps"><h2>خطوات إتمام الطلب والدفع</h2><div class="step"><div class="step-number">1</div><div class="step-content"><h4>حدد الكتب التي تريدها</h4><p>من صفحة <a href="#" onclick="showPage('books-page')">المكتبة</a>، قم بإضافة الكتب التي ترغب في شرائها إلى سلة المشتريات.</p></div></div><div class="step"><div class="step-number">2</div><div class="step-content"><h4>انسخ تفاصيل الطلب</h4><p>افتح سلة المشتريات، واضغط على زر "نسخ الطلب" ليتم نسخ تفاصيل مشترياتك والإجمالي.</p></div></div><div class="step"><div class="step-number">3</div><div class="step-content"><h4>أرسل المبلغ عبر فودافون كاش</h4><p>قم بتحويل المبلغ الإجمالي للرقم التالي:</p><div class="vodafone-number"><i class="bi bi-telephone-fill"></i> 01013598053</div></div></div><div class="step"><div class="step-number">4</div><div class="step-content"><h4>املأ نموذج البيانات</h4><p>بعد إتمام التحويل، اضغط على الزر بالأسفل لملء بياناتك وإرسال إيصال الدفع.</p></div></div><div class="step"><div class="step-number">5</div><div class="step-content"><h4>استلم كتبك</h4><p>سيتم إرسال جميع الكتب التي طلبتها بصيغة PDF إلى بريدك الإلكتروني أو رقم الواتساب المسجل خلال فترة قصيرة.</p></div></div></section>
+                <!-- Policies Section -->
+                <section class="policies-section"><h3>سياسة الاسترجاع وحقوق النشر</h3><h5 style="font-weight: 700; color: var(--dark-color); margin-top: 1.5rem;">سياسة الاسترجاع:</h5><p>نظرًا للطبيعة الرقمية للمنتج (كتب PDF)، لا يمكن استرداد المبلغ المدفوع بمجرد استلامك للكتب. نحن نثق في جودة محتوانا ولهذا نوفر قسم "المعاينة" لمراجعة عينة من الكتاب قبل الشراء لضمان رضاك التام.</p><h5 style="font-weight: 700; color: var(--dark-color); margin-top: 1.5rem;">سياسة حقوق النشر والاستخدام:</h5><p>يُمنع منعًا باتًا نشر أو توزيع أو بيع محتوى الكتب على أي منصات إلكترونية، مجموعات تواصل اجتماعي، أو بين الأفراد. الكتب المباعة مخصصة للاستخدام الشخصي للمشتري فقط. أي مخالفة لهذه السياسة ستعرضك للمساءلة القانونية.</p></section>
+                <!-- Google Form Link -->
+                <section class="form-container text-center">
+                    <h3>نموذج إتمام الدفع</h3>
+                    <p class="lead mb-4">بعد إتمام التحويل، اضغط على الزر أدناه لملء بياناتك وإرسال إيصال الدفع.</p>
+                    <a href="https://forms.gle/VcYom5JrSgXN36kT7" target="_blank" class="btn btn-primary btn-lg">
+                        <i class="bi bi-box-arrow-up-right"></i> اذهب إلى نموذج الدفع
+                    </a>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <!-- Filter Sidebar -->
+    <div class="sidebar-overlay" onclick="toggleFilterSidebar()"></div>
+    <div class="filter-sidebar">
+        <h4 class="mb-4">فلترة حسب:</h4>
+        <button class="btn btn-sm btn-danger mb-4" onclick="clearFilters()">مسح الفلاتر</button>
+        <div class="filter-group"><h5>المرحلة الدراسية</h5><div class="form-check"><input class="form-check-input" type="checkbox" value="الاول الثانوي" id="grade1" checked><label class="form-check-label" for="grade1">الاول الثانوي</label></div></div>
+        <div class="filter-group"><h5>الترم</h5><div class="form-check"><input class="form-check-input" type="checkbox" value="الترم الاول" id="term1_filter"><label class="form-check-label" for="term1_filter">الترم الاول</label></div><div class="form-check"><input class="form-check-input" type="checkbox" value="الترم الثاني" id="term2_filter"><label class="form-check-label" for="term2_filter">الترم الثاني</label></div></div>
+        <div class="filter-group"><h5>الحالة</h5><div class="form-check"><input class="form-check-input" type="checkbox" value="مدفوع" id="paid" checked><label class="form-check-label" for="paid">مدفوع</label></div><div class="form-check"><input class="form-check-input" type="checkbox" value="مجاني" id="free"><label class="form-check-label" for="free">مجاني</label></div></div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header"><h4>سلة المشتريات</h4><button class="btn-close" onclick="toggleCart()"></button></div>
+        <div class="cart-items" id="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-total"><span>الإجمالي:</span><span id="cart-total">0 ج</span></div>
+            <div class="cart-actions">
+                <button class="btn btn-copy" onclick="copyOrderDetails()"><i class="bi bi-clipboard"></i> نسخ الطلب</button>
+                <button class="btn btn-checkout" id="checkout-btn" disabled onclick="proceedToCheckout()"><i class="bi bi-credit-card"></i> إتمام الطلب</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Details Modal -->
+    <div class="modal fade" id="detailsModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="modalTitle">تفاصيل الكتاب</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body" id="modalBody"></div></div></div></div>
+
+    <!-- Toast Notification -->
+    <div class="toast-container"><div class="toast align-items-center text-white bg-success border-0" id="liveToast" role="alert"><div class="d-flex"><div class="toast-body" id="toast-message">تمت إضافة الكتاب للسلة!</div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button></div></div></div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // --- Data and State ---
+        const bookDetails = {
+            term1: ['كتاب شرح من الفصل 1 الى الفصل 20', 'كتاب الشرح يحتوى على شرح مفصل وامثلة ومسأل', 'كتاب اسئلة من الفصل 1 الى الفصل 17', 'كتاب الاسئلة لها نموذج اجابة', 'كتاب الاسئلة يحتوى على امتحان من 60 سؤال في نهاية الكتاب', 'ورقة فيها ملخص من الفصل 1 الى الفصل 17', 'عند الدفع يتم الحصول على الكتب بنسخة pdf', 'كتاب الاسئلة هيساعدك تختبر فهمك للأكواد', 'الاسئلة معمولة بنفس نظام المنصة وامتحان التوفاس', 'السعر رمزي مقارنة بمحتوى الكتاب فالحق الفرصه'],
+            term2: ['كتاب شرح من الفصل 21 الى الفصل 42', 'كتاب الشرح يحتوى على شرح مفصل وامثلة ومسأل منصة كيرو', 'كتاب اسئلة من الفصل 21 الى الفصل 42', 'كتاب الاسئلة يحتوى على 2 امتحان كل امتحان من 20 سؤال في نهاية الكتاب', 'اجمالي اسئلة كتاب الاسئلة 300 سؤال', 'كتاب الاسئلة لها نموذج اجابة', 'عند الدفع يتم الحصول على الكتب بنسخة pdf', 'كتاب الاسئلة هيساعدك تختبر فهمك للأكواد', 'الاسئلة معمولة بنفس نظام المنصة وامتحان التوفاس', 'السعر رمزي مقارنة بمحتوى الكتاب فالحق الفرصه']
+        };
+        let cart = JSON.parse(localStorage.getItem('programmingBooksCart')) || [];
+        let orderCopied = false;
+
+        // --- SPA Navigation ---
+        function showPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(section => section.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            const activeLink = document.querySelector(`.nav-link[onclick="showPage('${pageId}')"]`);
+            if (activeLink) activeLink.classList.add('active');
+            window.location.hash = pageId;
+            toggleCart(false); toggleFilterSidebar(false);
+        }
+
+        // --- Initial Load and Hash Handling ---
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartUI(); applyFilters();
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) showPage(hash);
+            else showPage('home-page');
+        });
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) showPage(hash);
+        });
+
+        // --- Cart Functions ---
+        function addToCart(title, price) {
+            if (cart.find(item => item.title === title)) { showToast('هذا الكتاب موجود بالفعل في السلة!'); return; }
+            cart.push({ title, price }); localStorage.setItem('programmingBooksCart', JSON.stringify(cart));
+            updateCartUI(); showToast(`تمت إضافة "${title}" للسلة بنجاح!`);
+        }
+        function removeFromCart(title) {
+            cart = cart.filter(item => item.title !== title); localStorage.setItem('programmingBooksCart', JSON.stringify(cart));
+            updateCartUI(); showToast('تم حذف الكتاب من السلة.');
+        }
+        function updateCartUI() {
+            const cartCountMobile = document.getElementById('cart-count');
+            const cartCountDesktop = document.getElementById('cart-count-desktop');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalElement = document.getElementById('cart-total');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            
+            const count = cart.length;
+            cartCountMobile.innerText = count;
+            cartCountDesktop.innerText = count;
+            
+            cartItemsContainer.innerHTML = '';
+            if (cart.length === 0) { 
+                cartItemsContainer.innerHTML = '<p class="text-center text-muted">السلة فارغة</p>'; 
+                cartTotalElement.innerText = '0 ج'; 
+                checkoutBtn.disabled = true; 
+                orderCopied = false; 
+            } else {
+                let total = 0; 
+                cart.forEach(item => { 
+                    total += item.price; 
+                    const itemDiv = document.createElement('div'); 
+                    itemDiv.className = 'cart-item'; 
+                    itemDiv.innerHTML = `<div class="cart-item-details"><div class="cart-item-title">${item.title}</div><div class="cart-item-price">${item.price} ج</div></div><button class="btn btn-sm btn-danger" onclick="removeFromCart('${item.title}')"><i class="bi bi-trash"></i></button>`; 
+                    cartItemsContainer.appendChild(itemDiv); 
+                });
+                cartTotalElement.innerText = `${total} ج`; 
+                if(orderCopied) checkoutBtn.disabled = false;
+            }
+        }
+        function toggleCart(force = null) { 
+            const cartSidebar = document.getElementById('cart-sidebar'); 
+            if (force === true) cartSidebar.classList.add('active'); 
+            else if (force === false) cartSidebar.classList.remove('active'); 
+            else cartSidebar.classList.toggle('active'); 
+        }
+
+        // --- Filter & Search Functions ---
+        function toggleFilterSidebar(force = null) { 
+            const sidebar = document.querySelector('.filter-sidebar'), overlay = document.querySelector('.sidebar-overlay'); 
+            if (force === true) { sidebar.classList.add('active'); overlay.classList.add('active'); } 
+            else if (force === false) { sidebar.classList.remove('active'); overlay.classList.remove('active'); } 
+            else { sidebar.classList.toggle('active'); overlay.classList.toggle('active'); } 
+        }
+        function clearFilters() { 
+            document.querySelectorAll('.filter-sidebar input[type="checkbox"]').forEach(cb => cb.checked = false); 
+            document.getElementById('grade1').checked = true; 
+            document.getElementById('paid').checked = true; 
+            applyFilters(); 
+        }
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const checkedTerms = Array.from(document.querySelectorAll('.filter-group input[type="checkbox"]:checked')).map(cb => cb.value);
+            document.querySelectorAll('.book-item').forEach(item => {
+                const title = item.dataset.title.toLowerCase(), term = item.dataset.term, price = item.dataset.price;
+                const matchesSearch = title.includes(searchTerm);
+                const matchesFilters = (checkedTerms.includes(term) || checkedTerms.includes('الاول الثانوي')) && checkedTerms.includes(price);
+                item.style.display = (matchesSearch && matchesFilters) ? 'block' : 'none';
+            });
+        }
+        document.getElementById('searchInput').addEventListener('input', applyFilters);
+        document.querySelectorAll('.filter-sidebar input[type="checkbox"]').forEach(checkbox => { checkbox.addEventListener('change', applyFilters); });
+
+        // --- Details Modal ---
+        function showDetails(term) {
+            const modal = new bootstrap.Modal(document.getElementById('detailsModal')), modalTitle = document.getElementById('modalTitle'), modalBody = document.getElementById('modalBody');
+            modalTitle.innerText = term === 'term1' ? 'تفاصيل مجموعة الترم الأول' : 'تفاصيل مجموعة الترم الثاني';
+            modalBody.innerHTML = '<ul>' + bookDetails[term].map(detail => `<li><i class="bi bi-check-circle-fill"></i> ${detail}</li>`).join('') + '</ul>';
+            modal.show();
+        }
+
+        // --- Checkout Flow ---
+        function copyOrderDetails() {
+            if (cart.length === 0) { showToast('السلة فارغة!'); return; }
+            let orderText = 'تفاصيل الطلب:\n', total = 0;
+            cart.forEach(item => { orderText += `- ${item.title}: ${item.price} ج\n`; total += item.price; });
+            orderText += `\nالإجمالي: ${total} ج`;
+            navigator.clipboard.writeText(orderText).then(() => { 
+                showToast('تم نسخ تفاصيل الطلب بنجاح! يمكنك الآن إتمام الطلب.'); 
+                orderCopied = true; 
+                document.getElementById('checkout-btn').disabled = false; 
+            }).catch(err => { 
+                console.error('Failed to copy: ', err); 
+                showToast('فشل نسخ الطلب، يرجى المحاولة يدويًا.'); 
+            });
+        }
+        function proceedToCheckout() {
+            if (!orderCopied) { showToast('يرجى نسخ الطلب أولًا!'); return; }
+            showPage('payment-page');
+        }
+
+        // --- Toast Notification ---
+        function showToast(message) {
+            const toastEl = document.getElementById('liveToast'), toastBody = document.getElementById('toast-message');
+            toastBody.innerText = message; const toast = new bootstrap.Toast(toastEl); toast.show();
+        }
+    </script>
+</body>
+</html>
