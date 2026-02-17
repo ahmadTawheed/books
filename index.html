@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>كتب البرمجة | مهندس أحمد</title>
     
     <!-- Tailwind CSS -->
@@ -23,38 +23,12 @@
                     colors: {
                         primary: {
                             50: '#f0fdf4',
-                            100: '#dcfce7',
-                            200: '#bbf7d0',
-                            300: '#86efac',
-                            400: '#4ade80',
                             500: '#22c55e',
                             600: '#16a34a',
                             700: '#15803d',
-                            800: '#166534',
-                            900: '#14532d',
-                        },
-                        accent: {
-                            50: '#fffbeb',
-                            100: '#fef3c7',
-                            200: '#fde68a',
-                            300: '#fcd34d',
-                            400: '#fbbf24',
-                            500: '#f59e0b',
-                            600: '#d97706',
-                            700: '#b45309',
-                            800: '#92400e',
-                            900: '#78350f',
                         },
                         dark: {
-                            50: '#f8fafc',
-                            100: '#f1f5f9',
-                            200: '#e2e8f0',
-                            300: '#cbd5e1',
-                            400: '#94a3b8',
-                            500: '#64748b',
-                            600: '#475569',
-                            700: '#334155',
-                            800: '#1e293b',
+            800: '#1e293b',
                             900: '#0f172a',
                             950: '#020617',
                         }
@@ -70,77 +44,92 @@
     
     <style>
         :root {
-            --bg: #0a0f0d;
-            --bg-card: #111916;
-            --bg-elevated: #1a2420;
+            --bg: #050807;
+            --bg-card: #0d1210;
+            --bg-elevated: #141c18;
             --fg: #f0fdf4;
             --fg-muted: #86efac;
             --accent: #22c55e;
-            --accent-glow: rgba(34, 197, 94, 0.4);
-            --border: rgba(34, 197, 94, 0.2);
+            --accent-glow: rgba(34, 197, 94, 0.3);
+            --border: rgba(34, 197, 94, 0.15);
         }
         
-        * {
-            box-sizing: border-box;
+        /* 1. Prevent Horizontal Scroll Globally */
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw;
         }
-        
+
         body {
             font-family: 'Tajawal', sans-serif;
-            background: var(--bg);
+            background-color: var(--bg);
             color: var(--fg);
-            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
         }
         
         /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 4px;
-        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
         
-        /* Animated Background */
+        /* 3. Fixed Background Effects */
         .bg-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: 
-                radial-gradient(ellipse at 20% 20%, rgba(34, 197, 94, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(21, 128, 61, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(22, 163, 74, 0.05) 0%, transparent 70%);
+                radial-gradient(ellipse at 10% 20%, rgba(34, 197, 94, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 80%, rgba(16, 185, 129, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
         }
         
-        /* Grid Pattern */
         .grid-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-image: 
-                linear-gradient(rgba(34, 197, 94, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(34, 197, 94, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
+                linear-gradient(rgba(34, 197, 94, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(34, 197, 94, 0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
         }
         
-        /* Floating Orbs */
+        /* Floating Orbs - Fixed Position to avoid scroll issues */
         .orb {
-            position: absolute;
+            position: fixed;
             border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.5;
-            animation: float 20s ease-in-out infinite;
+            filter: blur(100px);
+            opacity: 0.4;
+            animation: float 25s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
         }
         
         @keyframes float {
             0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(30px, -30px) scale(1.1); }
-            50% { transform: translate(-20px, 20px) scale(0.9); }
-            75% { transform: translate(20px, 30px) scale(1.05); }
+            33% { transform: translate(20px, -20px) scale(1.05); }
+            66% { transform: translate(-10px, 10px) scale(0.95); }
+        }
+        
+        /* Main Content Layer */
+        main, nav, footer, .sidebar {
+            position: relative;
+            z-index: 10;
         }
         
         /* Page Transitions */
         .page-section {
             display: none;
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            transform: translateY(15px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
         }
         
         .page-section.active {
@@ -149,19 +138,13 @@
             transform: translateY(0);
         }
         
-        /* Card Hover Effects */
+        /* Card Styles */
         .book-card {
             background: linear-gradient(145deg, var(--bg-card), var(--bg-elevated));
             border: 1px solid var(--border);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .book-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent);
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.4),
-                0 0 30px var(--accent-glow);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
         
         .book-card::before {
@@ -170,17 +153,23 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
+            height: 2px;
             background: linear-gradient(90deg, transparent, var(--accent), transparent);
             opacity: 0;
             transition: opacity 0.3s;
+        }
+        
+        .book-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(34, 197, 94, 0.4);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 25px var(--accent-glow);
         }
         
         .book-card:hover::before {
             opacity: 1;
         }
         
-        /* Button Styles */
+        /* Buttons */
         .btn-primary {
             background: linear-gradient(135deg, #22c55e, #16a34a);
             position: relative;
@@ -188,127 +177,60 @@
             transition: all 0.3s ease;
         }
         
-        .btn-primary::before {
+        .btn-primary::after {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: left 0.6s;
         }
         
-        .btn-primary:hover::before {
+        .btn-primary:hover::after {
             left: 100%;
         }
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.4);
+            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.35);
         }
         
-        .btn-secondary {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-        }
-        
-        .btn-secondary:hover {
-            background: var(--bg-card);
-            border-color: var(--accent);
-        }
-        
-        /* Input Styles */
-        .input-field {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-        }
-        
-        .input-field:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 20px var(--accent-glow);
-            outline: none;
-        }
-        
-        /* Sidebar Animations */
+        /* Sidebar Logic */
         .sidebar-right {
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(100%); /* Hidden by default */
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .sidebar-right.active {
-            transform: translateX(0);
+            transform: translateX(0); /* Visible */
         }
         
         .sidebar-left {
-            transform: translateX(-100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(-100%); /* Hidden by default */
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .sidebar-left.active {
-            transform: translateX(0);
+            transform: translateX(0); /* Visible */
         }
         
-        /* Stagger Animations */
+        /* Stagger Animation */
         .stagger-item {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(20px);
         }
         
         .stagger-item.visible {
-            animation: fadeInUp 0.6s ease forwards;
+            animation: fadeInUp 0.5s ease forwards;
         }
         
         @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Price Tag */
-        .price-tag {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 10% 100%, 0% 50%);
-        }
-        
-        /* Badge Pulse */
-        .badge-pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        
-        /* Toast Animation */
-        .toast-enter {
-            animation: slideInRight 0.4s ease forwards;
-        }
-        
-        @keyframes slideInRight {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
-        /* Hero Text Animation */
-        .hero-text {
-            background: linear-gradient(135deg, #f0fdf4 0%, #86efac 50%, #22c55e 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        /* Nav Link Underline */
+        /* Nav Link */
         .nav-link {
             position: relative;
         }
@@ -316,7 +238,7 @@
         .nav-link::after {
             content: '';
             position: absolute;
-            bottom: -4px;
+            bottom: -2px;
             right: 0;
             width: 0;
             height: 2px;
@@ -324,95 +246,21 @@
             transition: width 0.3s ease;
         }
         
-        .nav-link:hover::after,
-        .nav-link.active::after {
+        .nav-link:hover::after, .nav-link.active::after {
             width: 100%;
         }
         
-        /* Modal Backdrop */
-        .modal-backdrop {
-            backdrop-filter: blur(8px);
-            background: rgba(0, 0, 0, 0.7);
-        }
-        
-        /* Reduced Motion */
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-        
-        /* Quantity Controls */
-        .qty-btn {
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .qty-btn:hover {
-            background: var(--accent);
-            border-color: var(--accent);
-        }
-        
-        /* Step Number */
-        .step-number {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--accent), #15803d);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1.25rem;
-            box-shadow: 0 4px 15px var(--accent-glow);
-        }
-        
-        /* Feature Card */
-        .feature-card {
-            background: linear-gradient(145deg, var(--bg-card), var(--bg-elevated));
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s;
-        }
-        
-        .feature-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-5px);
-        }
-        
-        .feature-icon {
-            width: 64px;
-            height: 64px;
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1));
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-        }
-        
-        /* Checkbox Custom */
+        /* Custom Checkbox */
         .custom-checkbox {
             appearance: none;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--border);
-            border-radius: 6px;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(34, 197, 94, 0.3);
+            border-radius: 4px;
             cursor: pointer;
             transition: all 0.2s;
             position: relative;
+            background: var(--bg-card);
         }
         
         .custom-checkbox:checked {
@@ -426,66 +274,83 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: var(--bg);
-            font-size: 14px;
+            color: #000;
+            font-size: 12px;
             font-weight: bold;
+        }
+        
+        /* Toast */
+        .toast-enter {
+            animation: slideIn 0.3s ease forwards;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Mobile tweaks */
+        @media (max-width: 768px) {
+            .hero-text { font-size: 2.5rem; line-height: 1.2; }
         }
     </style>
 </head>
-<body class="min-h-screen bg-mesh grid-pattern">
+<body class="min-h-screen">
 
-    <!-- Floating Orbs -->
-    <div class="orb w-96 h-96 bg-green-500/20 top-20 -right-48" style="animation-delay: 0s;"></div>
-    <div class="orb w-80 h-80 bg-emerald-600/15 bottom-40 -left-40" style="animation-delay: -5s;"></div>
-    <div class="orb w-64 h-64 bg-green-400/10 top-1/2 left-1/2" style="animation-delay: -10s;"></div>
+    <!-- Background Layer (Fixed) -->
+    <div class="bg-mesh"></div>
+    <div class="grid-pattern"></div>
+    
+    <!-- Orbs (Fixed) -->
+    <div class="orb w-72 h-72 bg-green-600/30 top-10 -right-20"></div>
+    <div class="orb w-80 h-80 bg-emerald-700/20 bottom-20 -left-20" style="animation-delay: -10s;"></div>
 
     <!-- Navigation -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-dark-950/80 backdrop-blur-xl border-b border-green-500/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 lg:h-20">
                 <!-- Logo -->
-                <a href="#" onclick="navigateTo('home')" class="flex items-center gap-3 group">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center shadow-lg shadow-green-500/30 group-hover:shadow-green-500/50 transition-shadow">
+                <a href="#" onclick="navigateTo('home')" class="flex items-center gap-2 group">
+                    <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center shadow-lg shadow-green-500/20">
                         <i data-lucide="book-open" class="w-5 h-5 text-dark-950"></i>
                     </div>
-                    <span class="font-display font-bold text-xl text-white">مهندس أحمد</span>
+                    <span class="font-display font-bold text-lg text-white">مهندس أحمد</span>
                 </a>
                 
                 <!-- Desktop Nav -->
-                <div class="hidden lg:flex items-center gap-8">
-                    <a href="#" onclick="navigateTo('home')" class="nav-link font-medium text-green-100/80 hover:text-white transition-colors active" data-nav="home">الرئيسية</a>
-                    <a href="#" onclick="navigateTo('books')" class="nav-link font-medium text-green-100/80 hover:text-white transition-colors" data-nav="books">المكتبة</a>
-                    <a href="#" onclick="navigateTo('payment')" class="nav-link font-medium text-green-100/80 hover:text-white transition-colors" data-nav="payment">طريقة الدفع</a>
-                    <a href="https://wa.me/201501021670" target="_blank" class="nav-link font-medium text-green-100/80 hover:text-white transition-colors flex items-center gap-2">
+                <div class="hidden lg:flex items-center gap-6">
+                    <a href="#" onclick="navigateTo('home')" class="nav-link text-sm font-medium text-green-100/80 hover:text-white transition-colors active" data-nav="home">الرئيسية</a>
+                    <a href="#" onclick="navigateTo('books')" class="nav-link text-sm font-medium text-green-100/80 hover:text-white transition-colors" data-nav="books">المكتبة</a>
+                    <a href="#" onclick="navigateTo('payment')" class="nav-link text-sm font-medium text-green-100/80 hover:text-white transition-colors" data-nav="payment">طريقة الدفع</a>
+                    <a href="https://wa.me/201501021670" target="_blank" class="nav-link text-sm font-medium text-green-100/80 hover:text-white transition-colors flex items-center gap-2">
                         <i data-lucide="message-circle" class="w-4 h-4"></i>
-                        الدعم الفني
+                        الدعم
                     </a>
                 </div>
                 
-                <!-- Cart Button -->
-                <div class="flex items-center gap-4">
-                    <button onclick="toggleCart()" class="relative p-2 rounded-xl bg-dark-800/50 border border-green-500/20 hover:border-green-500/50 transition-all group">
+                <!-- Actions -->
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleCart()" class="relative p-2 rounded-lg bg-dark-800/40 border border-green-500/10 hover:border-green-500/30 transition-all group">
                         <i data-lucide="shopping-cart" class="w-5 h-5 text-green-400 group-hover:text-green-300 transition-colors"></i>
-                        <span id="cart-badge" class="absolute -top-2 -left-2 w-5 h-5 bg-gradient-to-br from-green-400 to-green-600 rounded-full text-xs font-bold text-dark-950 flex items-center justify-center badge-pulse">0</span>
+                        <span id="cart-badge" class="absolute -top-1.5 -left-1.5 w-5 h-5 bg-gradient-to-br from-green-400 to-green-600 rounded-full text-xs font-bold text-dark-950 flex items-center justify-center">0</span>
                     </button>
                     
-                    <!-- Mobile Menu Button -->
-                    <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-xl bg-dark-800/50 border border-green-500/20">
+                    <!-- Mobile Menu -->
+                    <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg bg-dark-800/40 border border-green-500/10">
                         <i data-lucide="menu" class="w-5 h-5 text-green-400" id="menu-icon"></i>
                     </button>
                 </div>
             </div>
         </div>
         
-        <!-- Mobile Menu -->
+        <!-- Mobile Menu Panel -->
         <div id="mobile-menu" class="lg:hidden hidden bg-dark-900/95 backdrop-blur-xl border-t border-green-500/10">
-            <div class="px-4 py-4 space-y-2">
-                <a href="#" onclick="navigateTo('home'); toggleMobileMenu();" class="block px-4 py-3 rounded-xl bg-dark-800/50 text-green-100 hover:bg-green-500/10 transition-colors">الرئيسية</a>
-                <a href="#" onclick="navigateTo('books'); toggleMobileMenu();" class="block px-4 py-3 rounded-xl bg-dark-800/50 text-green-100 hover:bg-green-500/10 transition-colors">المكتبة</a>
-                <a href="#" onclick="navigateTo('payment'); toggleMobileMenu();" class="block px-4 py-3 rounded-xl bg-dark-800/50 text-green-100 hover:bg-green-500/10 transition-colors">طريقة الدفع</a>
-                <a href="https://wa.me/201501021670" target="_blank" class="block px-4 py-3 rounded-xl bg-dark-800/50 text-green-100 hover:bg-green-500/10 transition-colors flex items-center gap-2">
-                    <i data-lucide="message-circle" class="w-4 h-4"></i>
-                    الدعم الفني
+            <div class="px-4 py-3 space-y-1">
+                <a href="#" onclick="navigateTo('home'); toggleMobileMenu();" class="block px-4 py-2.5 rounded-lg text-green-100 hover:bg-green-500/10 transition-colors">الرئيسية</a>
+                <a href="#" onclick="navigateTo('books'); toggleMobileMenu();" class="block px-4 py-2.5 rounded-lg text-green-100 hover:bg-green-500/10 transition-colors">المكتبة</a>
+                <a href="#" onclick="navigateTo('payment'); toggleMobileMenu();" class="block px-4 py-2.5 rounded-lg text-green-100 hover:bg-green-500/10 transition-colors">طريقة الدفع</a>
+                <a href="https://wa.me/201501021670" target="_blank" class="block px-4 py-2.5 rounded-lg text-green-100 hover:bg-green-500/10 transition-colors flex items-center gap-2">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i> الدعم
                 </a>
             </div>
         </div>
@@ -496,250 +361,198 @@
         
         <!-- HOME PAGE -->
         <section id="home-page" class="page-section active min-h-screen">
-            <!-- Hero Section -->
-            <div class="relative min-h-[90vh] flex items-center justify-center px-4 overflow-hidden">
-                <!-- Hero Background Effect -->
-                <div class="absolute inset-0">
-                    <div class="absolute top-1/4 right-1/4 w-64 h-64 bg-green-500/10 rounded-full filter blur-3xl"></div>
-                    <div class="absolute bottom-1/4 left-1/4 w-96 h-96 bg-emerald-500/5 rounded-full filter blur-3xl"></div>
-                </div>
-                
-                <div class="relative max-w-5xl mx-auto text-center">
-                    <!-- Badge -->
-                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 mb-8 stagger-item" style="animation-delay: 0.1s;">
-                        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        <span class="text-green-400 text-sm font-medium">الصف الأول الثانوي - مسار العلوم والرياضيات</span>
+            <div class="relative min-h-[85vh] flex items-center justify-center px-4">
+                <div class="max-w-4xl mx-auto text-center">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 mb-6 stagger-item">
+                        <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+                        <span class="text-green-400 text-xs font-medium">الصف الأول الثانوي</span>
                     </div>
                     
-                    <!-- Main Heading -->
-                    <h1 class="font-display font-black text-4xl sm:text-5xl lg:text-7xl mb-6 stagger-item hero-text" style="animation-delay: 0.2s;">
+                    <h1 class="font-display font-black text-4xl sm:text-5xl lg:text-6xl mb-5 stagger-item hero-text" style="animation-delay: 0.1s;">
                         احترف البرمجة<br>
                         <span class="text-green-400">من الصفر</span>
                     </h1>
                     
-                    <!-- Subheading -->
-                    <p class="text-lg sm:text-xl text-green-800 max-w-2xl mx-auto mb-10 leading-relaxed stagger-item" style="animation-delay: 0.3s;">
-                        كتب برمجة شاملة ومتكاملة تغطي منهج الصف الأول الثانوي بالكامل. 
-                        شرح مفصل، أمثلة عملية، وتمارين تطبيقية تضمن تفوقك.
+                    <p class="text-base sm:text-lg text-green-100/60 max-w-xl mx-auto mb-8 leading-relaxed stagger-item" style="animation-delay: 0.2s;">
+                        كتب برمجة شاملة تغطي منهج الصف الأول الثانوي. شرح مفصل، أمثلة عملية، وتمارين تطبيقية.
                     </p>
                     
-                    <!-- CTA Buttons -->
-                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 stagger-item" style="animation-delay: 0.4s;">
-                        <button onclick="navigateTo('books')" class="btn-primary px-8 py-4 rounded-2xl font-bold text-lg text-white flex items-center gap-3">
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-3 stagger-item" style="animation-delay: 0.3s;">
+                        <button onclick="navigateTo('books')" class="btn-primary px-6 py-3 rounded-xl font-bold text-dark-950 flex items-center gap-2">
                             <span>تصفح الكتب</span>
-                            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
                         </button>
-                        <a href="https://wa.me/201501021670" target="_blank" class="btn-secondary px-8 py-4 rounded-2xl font-bold text-lg text-green-100 flex items-center gap-3">
-                            <i data-lucide="message-circle" class="w-5 h-5"></i>
+                        <a href="https://wa.me/201501021670" target="_blank" class="px-6 py-3 rounded-xl font-bold text-green-100 border border-green-500/30 hover:bg-green-500/5 transition-all flex items-center gap-2">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i>
                             <span>تواصل معنا</span>
                         </a>
                     </div>
                     
                     <!-- Stats -->
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-16 stagger-item" style="animation-delay: 0.5s;">
-                        <div class="text-center">
-                            <div class="text-3xl sm:text-4xl font-black text-green-400">500+</div>
-                            <div class="text-green-100/60 text-sm">طالب مستفيد</div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-16 stagger-item" style="animation-delay: 0.4s;">
+                        <div class="p-4 rounded-xl bg-dark-900/30 border border-green-500/5">
+                            <div class="text-2xl font-black text-green-400">500+</div>
+                            <div class="text-green-100/50 text-xs">طالب مستفيد</div>
                         </div>
-                        <div class="text-center">
-                            <div class="text-3xl sm:text-4xl font-black text-green-400">300+</div>
-                            <div class="text-green-100/60 text-sm">صفحة شرح</div>
+                        <div class="p-4 rounded-xl bg-dark-900/30 border border-green-500/5">
+                            <div class="text-2xl font-black text-green-400">300+</div>
+                            <div class="text-green-100/50 text-xs">صفحة شرح</div>
                         </div>
-                        <div class="text-center">
-                            <div class="text-3xl sm:text-4xl font-black text-green-400">350+</div>
-                            <div class="text-green-100/60 text-sm">سؤال تدريبي</div>
+                        <div class="p-4 rounded-xl bg-dark-900/30 border border-green-500/5">
+                            <div class="text-2xl font-black text-green-400">350+</div>
+                            <div class="text-green-100/50 text-xs">سؤال تدريبي</div>
                         </div>
-                        <div class="text-center">
-                            <div class="text-3xl sm:text-4xl font-black text-green-400">98%</div>
-                            <div class="text-green-100/60 text-sm">نسبة الرضا</div>
+                        <div class="p-4 rounded-xl bg-dark-900/30 border border-green-500/5">
+                            <div class="text-2xl font-black text-green-400">98%</div>
+                            <div class="text-green-100/50 text-xs">نسبة الرضا</div>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Features Section -->
-            <div class="py-20 px-4">
-                <div class="max-w-6xl mx-auto">
-                    <h2 class="font-display font-bold text-3xl sm:text-4xl text-center mb-4 text-white">لماذا كتبنا مميزة؟</h2>
-                    <p class="text-green-100/60 text-center mb-12 max-w-2xl mx-auto">نقدم لك محتوى تعليمي عالي الجودة مصمم خصيصاً لطلاب الصف الأول الثانوي</p>
+            <!-- Features -->
+            <div class="py-16 px-4">
+                <div class="max-w-5xl mx-auto">
+                    <h2 class="font-display font-bold text-2xl text-center mb-3 text-white">لماذا كتبنا مميزة؟</h2>
+                    <p class="text-green-100/50 text-center mb-10 text-sm">محتوى تعليمي عالي الجودة مصمم لطلاب الصف الأول الثانوي</p>
                     
-                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div class="feature-card stagger-item" style="animation-delay: 0.1s;">
-                            <div class="feature-icon">
-                                <i data-lucide="book-open" class="w-8 h-8 text-green-400"></i>
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="p-5 rounded-xl bg-dark-900/30 border border-green-500/5 text-center hover:border-green-500/20 transition-colors stagger-item" style="animation-delay: 0.1s;">
+                            <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center mx-auto mb-3">
+                                <i data-lucide="book-open" class="w-5 h-5 text-green-400"></i>
                             </div>
-                            <h3 class="font-bold text-lg text-white mb-2">شرح مفصل</h3>
-                            <p class="text-green-100/60 text-sm">شرح خطوة بخطوة لكل المفاهيم البرمجية</p>
+                            <h3 class="font-bold text-white text-sm mb-1">شرح مفصل</h3>
+                            <p class="text-green-100/50 text-xs">شرح خطوة بخطوة للمفاهيم</p>
                         </div>
                         
-                        <div class="feature-card stagger-item" style="animation-delay: 0.2s;">
-                            <div class="feature-icon">
-                                <i data-lucide="code-2" class="w-8 h-8 text-green-400"></i>
+                        <div class="p-5 rounded-xl bg-dark-900/30 border border-green-500/5 text-center hover:border-green-500/20 transition-colors stagger-item" style="animation-delay: 0.15s;">
+                            <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center mx-auto mb-3">
+                                <i data-lucide="code-2" class="w-5 h-5 text-green-400"></i>
                             </div>
-                            <h3 class="font-bold text-lg text-white mb-2">أمثلة عملية</h3>
-                            <p class="text-green-100/60 text-sm">أمثلة برمجية حقيقية قابلة للتطبيق</p>
+                            <h3 class="font-bold text-white text-sm mb-1">أمثلة عملية</h3>
+                            <p class="text-green-100/50 text-xs">أكواد قابلة للتطبيق</p>
                         </div>
                         
-                        <div class="feature-card stagger-item" style="animation-delay: 0.3s;">
-                            <div class="feature-icon">
-                                <i data-lucide="file-check" class="w-8 h-8 text-green-400"></i>
+                        <div class="p-5 rounded-xl bg-dark-900/30 border border-green-500/5 text-center hover:border-green-500/20 transition-colors stagger-item" style="animation-delay: 0.2s;">
+                            <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center mx-auto mb-3">
+                                <i data-lucide="file-check" class="w-5 h-5 text-green-400"></i>
                             </div>
-                            <h3 class="font-bold text-lg text-white mb-2">نماذج إجابة</h3>
-                            <p class="text-green-100/60 text-sm">حلول مفصلة لجميع التمارين</p>
+                            <h3 class="font-bold text-white text-sm mb-1">نماذج إجابة</h3>
+                            <p class="text-green-100/50 text-xs">حلول مفصلة للتمارين</p>
                         </div>
                         
-                        <div class="feature-card stagger-item" style="animation-delay: 0.4s;">
-                            <div class="feature-icon">
-                                <i data-lucide="smartphone" class="w-8 h-8 text-green-400"></i>
+                        <div class="p-5 rounded-xl bg-dark-900/30 border border-green-500/5 text-center hover:border-green-500/20 transition-colors stagger-item" style="animation-delay: 0.25s;">
+                            <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center mx-auto mb-3">
+                                <i data-lucide="smartphone" class="w-5 h-5 text-green-400"></i>
                             </div>
-                            <h3 class="font-bold text-lg text-white mb-2">صيغة PDF</h3>
-                            <p class="text-green-100/60 text-sm">ملفات رقمية سهلة الحمل والتصفح</p>
+                            <h3 class="font-bold text-white text-sm mb-1">صيغة PDF</h3>
+                            <p class="text-green-100/50 text-xs">سهلة الحمل والتصفح</p>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Footer -->
-            <footer class="bg-dark-950 border-t border-green-500/10 py-8 px-4">
-                <div class="max-w-6xl mx-auto text-center">
-                    <p class="text-green-100/60 text-sm">
-                        جميع الحقوق محفوظة 2024 مهندس أحمد
-                    </p>
-                </div>
-            </footer>
         </section>
 
         <!-- BOOKS PAGE -->
         <section id="books-page" class="page-section min-h-screen py-8 px-4">
-            <div class="max-w-7xl mx-auto">
-                <!-- Page Header -->
-                <div class="text-center mb-12">
-                    <h1 class="font-display font-black text-4xl sm:text-5xl text-white mb-4">مكتبة الكتب</h1>
-                    <p class="text-green-100/60 text-lg">اختر الكتب المناسبة وابدأ رحلتك نحو التفوق</p>
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-10">
+                    <h1 class="font-display font-black text-3xl sm:text-4xl text-white mb-2">مكتبة الكتب</h1>
+                    <p class="text-green-100/50 text-sm">اختر الكتب وابدأ رحلتك</p>
                 </div>
                 
-                <!-- Search & Filter Controls -->
-                <div class="flex flex-col lg:flex-row gap-4 mb-8">
-                    <!-- Search Input -->
+                <!-- Controls -->
+                <div class="flex flex-col sm:flex-row gap-3 mb-6">
                     <div class="flex-1 relative">
-                        <i data-lucide="search" class="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-green-100/40"></i>
-                        <input 
-                            type="text" 
-                            id="search-input" 
-                            placeholder="ابحث عن كتاب..."
-                            class="input-field w-full pr-12 pl-4 py-4 rounded-2xl text-white placeholder-green-100/40"
-                            oninput="filterBooks()"
-                        >
+                        <i data-lucide="search" class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-green-100/30"></i>
+                        <input type="text" id="search-input" placeholder="ابحث عن كتاب..." class="w-full pr-9 pl-4 py-2.5 rounded-xl bg-dark-900/50 border border-green-500/10 text-white placeholder-green-100/30 text-sm focus:border-green-500/50 focus:outline-none transition-colors" oninput="filterBooks()">
                     </div>
-                    
-                    <!-- Filter Button -->
-                    <button onclick="toggleFilter()" class="flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-[#0a0f0d] border border-green-500/20 hover:border-green-500/50 transition-all">
-                        <i data-lucide="sliders-horizontal" class="w-5 h-5 text-green-400"></i>
-                        <span class="font-medium text-white">فلترة</span>
+                    <button onclick="toggleFilter()" class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-dark-900/50 border border-green-500/10 hover:border-green-500/30 transition-colors text-sm">
+                        <i data-lucide="sliders-horizontal" class="w-4 h-4 text-green-400"></i>
+                        <span class="text-white font-medium">فلترة</span>
                     </button>
                 </div>
                 
-                <!-- Active Filters -->
-                <div id="active-filters" class="flex flex-wrap gap-2 mb-6 hidden">
-                    <!-- Will be populated by JS -->
-                </div>
-                
                 <!-- Books Grid -->
-                <div id="books-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Books will be rendered by JS -->
-                </div>
+                <div id="books-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
                 
                 <!-- Empty State -->
-                <div id="empty-state" class="hidden text-center py-20">
-                    <i data-lucide="book-x" class="w-16 h-16 text-green-100/20 mx-auto mb-4"></i>
-                    <h3 class="text-xl font-bold text-white mb-2">لا توجد نتائج</h3>
-                    <p class="text-green-100/60">جرب البحث بكلمات مختلفة أو عدّل الفلاتر</p>
+                <div id="empty-state" class="hidden text-center py-16">
+                    <i data-lucide="book-x" class="w-12 h-12 text-green-100/10 mx-auto mb-3"></i>
+                    <h3 class="text-lg font-bold text-white mb-1">لا توجد نتائج</h3>
+                    <p class="text-green-100/50 text-sm">جرب البحث بكلمات مختلفة</p>
                 </div>
             </div>
         </section>
 
         <!-- PAYMENT PAGE -->
         <section id="payment-page" class="page-section min-h-screen py-8 px-4">
-            <div class="max-w-4xl mx-auto">
-                <!-- Page Header -->
-                <div class="text-center mb-12">
-                    <h1 class="font-display font-black text-4xl sm:text-5xl text-[#020617] mb-4">طريقة الدفع والطلب</h1>
-                    <p class="text-green-900 text-lg">خطوات بسيطة للحصول على كتبك</p>
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-10">
+                    <h1 class="font-display font-black text-3xl sm:text-4xl text-white mb-2">طريقة الدفع</h1>
+                    <p class="text-green-100/50 text-sm">خطوات بسيطة للحصول على كتبك</p>
                 </div>
                 
-                <!-- Payment Steps -->
-                <div class="space-y-6 mb-12">
-                    <!-- Step 1 -->
-                    <div class="flex gap-4 p-6 rounded-2xl bg-[#020617] border border-green-500/10">
-                        <div class="step-number shrink-0">1</div>
+                <div class="space-y-4 mb-10">
+                    <!-- Steps -->
+                    <div class="flex gap-3 p-4 rounded-xl bg-dark-900/30 border border-green-500/5">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-dark-950 font-bold text-sm shrink-0">1</div>
                         <div>
-                            <h3 class="font-bold text-lg text-white mb-2">اختر كتبك</h3>
-                            <p class="text-green-100/60">تصفح المكتبة وأضف الكتب التي تريدها إلى سلة المشتريات</p>
+                            <h3 class="font-bold text-white text-sm mb-1">اختر كتبك</h3>
+                            <p class="text-green-100/50 text-xs">أضف الكتب إلى سلة المشتريات</p>
                         </div>
                     </div>
                     
-                    <!-- Step 2 -->
-                    <div class="flex gap-4 p-6 rounded-2xl bg-[#020617] border border-green-500/10">
-                        <div class="step-number shrink-0">2</div>
+                    <div class="flex gap-3 p-4 rounded-xl bg-dark-900/30 border border-green-500/5">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-dark-950 font-bold text-sm shrink-0">2</div>
                         <div>
-                            <h3 class="font-bold text-lg text-white mb-2">انسخ تفاصيل الطلب</h3>
-                            <p class="text-green-100/60">من سلة المشتريات، اضغط "نسخ الطلب" لنسخ التفاصيل والإجمالي</p>
+                            <h3 class="font-bold text-white text-sm mb-1">انسخ تفاصيل الطلب</h3>
+                            <p class="text-green-100/50 text-xs">اضغط "نسخ الطلب" من السلة</p>
                         </div>
                     </div>
                     
-                    <!-- Step 3 -->
-                    <div class="flex gap-4 p-6 rounded-2xl bg-[#020617] border border-green-500/10">
-                        <div class="step-number shrink-0">3</div>
+                    <div class="flex gap-3 p-4 rounded-xl bg-dark-900/30 border border-green-500/5">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-dark-950 font-bold text-sm shrink-0">3</div>
                         <div>
-                            <h3 class="font-bold text-lg text-white mb-2">حوّل المبلغ</h3>
-                            <p class="text-green-100/60 mb-3">قم بتحويل المبلغ عبر فودافون كاش إلى:</p>
-                            <div class="inline-flex items-center gap-3 px-4 py-3 rounded-xl bg-green-500/10 border border-green-500/30">
-                                <i data-lucide="phone" class="w-5 h-5 text-green-400"></i>
-                                <span class="font-bold text-xl text-green-400" dir="ltr">01013598053</span>
+                            <h3 class="font-bold text-white text-sm mb-1">حوّل المبلغ</h3>
+                            <p class="text-green-100/50 text-xs mb-2">عبر فودافون كاش إلى:</p>
+                            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-green-500/10 border border-green-500/20">
+                                <i data-lucide="phone" class="w-3 h-3 text-green-400"></i>
+                                <span class="font-bold text-green-400" dir="ltr">01013598053</span>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Step 4 -->
-                    <div class="flex gap-4 p-6 rounded-2xl bg-[#020617] border border-green-500/10">
-                        <div class="step-number shrink-0">4</div>
+                    <div class="flex gap-3 p-4 rounded-xl bg-dark-900/30 border border-green-500/5">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-dark-950 font-bold text-sm shrink-0">4</div>
                         <div>
-                            <h3 class="font-bold text-lg text-white mb-2">أرسل البيانات</h3>
-                            <p class="text-green-100/60 mb-3">املأ نموذج البيانات وأرفق إيصال التحويل</p>
-                            <a href="https://forms.gle/VcYom5JrSgXN36kT7" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl btn-primary text-whitefont-bold">
+                            <h3 class="font-bold text-white text-sm mb-1">أرسل البيانات</h3>
+                            <p class="text-green-100/50 text-xs mb-2">املأ النموذج وأرفق الإيصال</p>
+                            <a href="https://forms.gle/VcYom5JrSgXN36kT7" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg btn-primary text-dark-950 text-xs font-bold">
                                 <span>نموذج البيانات</span>
-                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                                <i data-lucide="external-link" class="w-3 h-3"></i>
                             </a>
                         </div>
                     </div>
                     
-                    <!-- Step 5 -->
-                    <div class="flex gap-4 p-6 rounded-2xl bg-[#020617] border border-green-500/10">
-                        <div class="step-number shrink-0">5</div>
+                    <div class="flex gap-3 p-4 rounded-xl bg-dark-900/30 border border-green-500/5">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-dark-950 font-bold text-sm shrink-0">5</div>
                         <div>
-                            <h3 class="font-bold text-lg text-white mb-2">استلم كتبك</h3>
-                            <p class="text-green-100/60">سيتم إرسال الكتب بصيغة PDF إلى بريدك الإلكتروني أو واتساب خلال 24 ساعة</p>
+                            <h3 class="font-bold text-white text-sm mb-1">استلم كتبك</h3>
+                            <p class="text-green-100/50 text-xs">خلال 24 ساعة على بريدك أو واتساب</p>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Policies -->
-                <div class="p-6 rounded-2xl bg-[#020617] border border-green-500/10 mb-8">
-                    <h3 class="font-bold text-xl text-white mb-4 flex items-center gap-3">
-                        <i data-lucide="shield-check" class="w-6 h-6 text-green-400"></i>
+                <div class="p-5 rounded-xl bg-dark-900/30 border border-green-500/5">
+                    <h3 class="font-bold text-white text-sm mb-3 flex items-center gap-2">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-green-400"></i>
                         سياسة الاسترجاع وحقوق النشر
                     </h3>
-                    
-                    <div class="space-y-4 text-green-100/70">
-                        <div>
-                            <h4 class="font-bold text-white mb-1">سياسة الاسترجاع:</h4>
-                            <p>نظراً للطبيعة الرقمية للمنتج، لا يمكن استرداد المبلغ بعد استلام الكتب. نوفر عينات معاينة لمراجعة المحتوى قبل الشراء.</p>
-                        </div>
-                        
-                        <div>
-                            <h4 class="font-bold text-white mb-1">حقوق النشر:</h4>
-                            <p>يُمنع نشر أو توزيع أو بيع الكتب. الاستخدام شخصي فقط للمشتري. أي مخالفة تعرضك للمساءلة القانونية.</p>
-                        </div>
+                    <div class="space-y-3 text-green-100/50 text-xs">
+                        <p><strong class="text-green-100/80">الاسترجاع:</strong> لا يمكن استرداد المبلغ بعد الاستلام. عينات المعاينة متاحة قبل الشراء.</p>
+                        <p><strong class="text-green-100/80">النشر:</strong> يُمنع توزيع أو بيع الكتب. الاستخدام شخصي فقط.</p>
                     </div>
                 </div>
             </div>
@@ -747,91 +560,75 @@
     </main>
 
     <!-- CART SIDEBAR -->
-    <div id="cart-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden" onclick="toggleCart()"></div>
-    <aside id="cart-sidebar" class="sidebar-left fixed top-0 left-0 w-full sm:w-[400px] h-full bg-dark-950 border-r border-green-500/10 z-50 flex flex-col">
-        <!-- Cart Header -->
-        <div class="flex items-center justify-between p-6 border-b border-green-500/10">
-            <h2 class="font-display font-bold text-xl text-white flex items-center gap-2">
-                <i data-lucide="shopping-cart" class="w-5 h-5 text-green-400"></i>
-                سلة المشتريات
+    <div id="cart-overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 hidden" onclick="toggleCart()"></div>
+    <aside id="cart-sidebar" class="sidebar-left fixed top-0 left-0 w-full sm:w-80 h-full bg-dark-950 border-r border-green-500/10 z-50 flex flex-col">
+        <div class="flex items-center justify-between p-4 border-b border-green-500/10">
+            <h2 class="font-display font-bold text-lg text-white flex items-center gap-2">
+                <i data-lucide="shopping-cart" class="w-4 h-4 text-green-400"></i>
+                السلة
             </h2>
-            <button onclick="toggleCart()" class="p-2 rounded-xl hover:bg-dark-800/50 transition-colors">
-                <i data-lucide="x" class="w-5 h-5 text-green-100/60"></i>
+            <button onclick="toggleCart()" class="p-1.5 rounded-lg hover:bg-dark-800/50">
+                <i data-lucide="x" class="w-4 h-4 text-green-100/40"></i>
             </button>
         </div>
-        
-        <!-- Cart Items -->
-        <div id="cart-items" class="flex-1 overflow-y-auto p-6">
-            <!-- Items will be rendered by JS -->
-        </div>
-        
-        <!-- Cart Footer -->
-        <div id="cart-footer" class="p-6 border-t border-green-500/10 space-y-4 hidden">
+        <div id="cart-items" class="flex-1 overflow-y-auto p-4"></div>
+        <div id="cart-footer" class="p-4 border-t border-green-500/10 space-y-3 hidden">
             <div class="flex justify-between items-center">
-                <span class="text-green-100/60">الإجمالي:</span>
-                <span id="cart-total" class="font-black text-2xl text-green-400">0 ج</span>
+                <span class="text-green-100/50 text-sm">الإجمالي:</span>
+                <span id="cart-total" class="font-black text-xl text-green-400">0 ج</span>
             </div>
-            
-            <div class="grid grid-cols-2 gap-3">
-                <button onclick="copyOrder()" class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-dark-800/50 border border-green-500/20 hover:border-green-500/50 transition-all font-medium text-white">
-                    <i data-lucide="copy" class="w-4 h-4"></i>
+            <div class="grid grid-cols-2 gap-2">
+                <button onclick="copyOrder()" class="flex items-center justify-center gap-1 px-3 py-2 rounded-lg bg-dark-800/50 border border-green-500/10 hover:border-green-500/30 text-white text-xs font-medium transition-colors">
+                    <i data-lucide="copy" class="w-3 h-3"></i>
                     نسخ الطلب
                 </button>
-                <button id="checkout-btn" onclick="proceedToCheckout()" class="btn-primary flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-bold text-dark-950 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                    <i data-lucide="credit-card" class="w-4 h-4"></i>
-                    إتمام الطلب
+                <button id="checkout-btn" onclick="proceedToCheckout()" class="btn-primary flex items-center justify-center gap-1 px-3 py-2 rounded-lg text-dark-950 text-xs font-bold disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+                    <i data-lucide="credit-card" class="w-3 h-3"></i>
+                    إتمام
                 </button>
             </div>
         </div>
     </aside>
 
     <!-- FILTER SIDEBAR -->
-    <div id="filter-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden" onclick="toggleFilter()"></div>
-    <aside id="filter-sidebar" class="sidebar-right fixed top-0 right-0 w-full sm:w-[350px] h-full bg-dark-950 border-l border-green-500/10 z-50 flex flex-col">
-        <!-- Filter Header -->
-        <div class="flex items-center justify-between p-6 border-b border-green-500/10">
-            <h2 class="font-display font-bold text-xl text-white">فلترة النتائج</h2>
-            <button onclick="toggleFilter()" class="p-2 rounded-xl hover:bg-dark-800/50 transition-colors">
-                <i data-lucide="x" class="w-5 h-5 text-green-100/60"></i>
+    <div id="filter-overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 hidden" onclick="toggleFilter()"></div>
+    <aside id="filter-sidebar" class="sidebar-right fixed top-0 right-0 w-full sm:w-72 h-full bg-dark-950 border-l border-green-500/10 z-50 flex flex-col">
+        <div class="flex items-center justify-between p-4 border-b border-green-500/10">
+            <h2 class="font-display font-bold text-lg text-white">فلترة</h2>
+            <button onclick="toggleFilter()" class="p-1.5 rounded-lg hover:bg-dark-800/50">
+                <i data-lucide="x" class="w-4 h-4 text-green-100/40"></i>
             </button>
         </div>
-        
-        <!-- Filter Content -->
-        <div class="flex-1 overflow-y-auto p-6 space-y-6">
-            <!-- Semester Filter -->
+        <div class="flex-1 overflow-y-auto p-4 space-y-5">
             <div>
-                <h3 class="font-bold text-white mb-3">الترم</h3>
-                <div class="space-y-2">
-                    <label class="flex items-center gap-3 cursor-pointer p-3 rounded-xl hover:bg-dark-800/30 transition-colors">
+                <h3 class="font-bold text-white text-sm mb-2">الترم</h3>
+                <div class="space-y-1">
+                    <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-dark-800/30">
                         <input type="checkbox" class="custom-checkbox" data-filter="term" value="الترم الأول" onchange="filterBooks()" checked>
-                        <span class="text-green-100/80">الترم الأول</span>
+                        <span class="text-green-100/70 text-sm">الترم الأول</span>
                     </label>
-                    <label class="flex items-center gap-3 cursor-pointer p-3 rounded-xl hover:bg-dark-800/30 transition-colors">
+                    <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-dark-800/30">
                         <input type="checkbox" class="custom-checkbox" data-filter="term" value="الترم الثاني" onchange="filterBooks()" checked>
-                        <span class="text-green-100/80">الترم الثاني</span>
+                        <span class="text-green-100/70 text-sm">الترم الثاني</span>
                     </label>
                 </div>
             </div>
-            
-            <!-- Type Filter -->
             <div>
-                <h3 class="font-bold text-white mb-3">النوع</h3>
-                <div class="space-y-2">
-                    <label class="flex items-center gap-3 cursor-pointer p-3 rounded-xl hover:bg-dark-800/30 transition-colors">
+                <h3 class="font-bold text-white text-sm mb-2">النوع</h3>
+                <div class="space-y-1">
+                    <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-dark-800/30">
                         <input type="checkbox" class="custom-checkbox" data-filter="type" value="مدفوع" onchange="filterBooks()" checked>
-                        <span class="text-green-100/80">مدفوع</span>
+                        <span class="text-green-100/70 text-sm">مدفوع</span>
                     </label>
-                    <label class="flex items-center gap-3 cursor-pointer p-3 rounded-xl hover:bg-dark-800/30 transition-colors">
+                    <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-dark-800/30">
                         <input type="checkbox" class="custom-checkbox" data-filter="type" value="مجاني" onchange="filterBooks()" checked>
-                        <span class="text-green-100/80">مجاني</span>
+                        <span class="text-green-100/70 text-sm">مجاني</span>
                     </label>
                 </div>
             </div>
         </div>
-        
-        <!-- Filter Footer -->
-        <div class="p-6 border-t border-green-500/10">
-            <button onclick="clearFilters()" class="w-full px-4 py-3 rounded-xl bg-dark-800/50 border border-green-500/20 hover:border-green-500/50 transition-all font-medium text-white">
+        <div class="p-4 border-t border-green-500/10">
+            <button onclick="clearFilters()" class="w-full px-3 py-2 rounded-lg bg-dark-800/50 border border-green-500/10 hover:border-green-500/30 text-white text-xs font-medium transition-colors">
                 مسح الفلاتر
             </button>
         </div>
@@ -839,136 +636,80 @@
 
     <!-- DETAILS MODAL -->
     <div id="details-modal" class="fixed inset-0 z-[60] hidden items-center justify-center p-4">
-        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" onclick="closeDetailsModal()"></div>
-        <div class="relative w-full max-w-lg bg-dark-900 rounded-3xl border border-green-500/20 max-h-[80vh] overflow-hidden">
-            <!-- Modal Header -->
-            <div class="flex items-center justify-between p-6 border-b border-green-500/10">
-                <h2 id="modal-title" class="font-display font-bold text-xl text-white">تفاصيل الكتاب</h2>
-                <button onclick="closeDetailsModal()" class="p-2 rounded-xl hover:bg-dark-800/50 transition-colors">
-                    <i data-lucide="x" class="w-5 h-5 text-green-100/60"></i>
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeDetailsModal()"></div>
+        <div class="relative w-full max-w-md bg-dark-900 rounded-2xl border border-green-500/10 max-h-[80vh] overflow-hidden flex flex-col">
+            <div class="flex items-center justify-between p-4 border-b border-green-500/10 shrink-0">
+                <h2 id="modal-title" class="font-display font-bold text-lg text-white">تفاصيل</h2>
+                <button onclick="closeDetailsModal()" class="p-1.5 rounded-lg hover:bg-dark-800/50">
+                    <i data-lucide="x" class="w-4 h-4 text-green-100/40"></i>
                 </button>
             </div>
-            
-            <!-- Modal Body -->
-            <div id="modal-body" class="p-6 overflow-y-auto max-h-[60vh]">
-                <!-- Content will be rendered by JS -->
-            </div>
-            
-            <!-- Modal Footer -->
-            <div class="p-6 border-t border-green-500/10">
-                <button onclick="closeDetailsModal()" class="w-full px-4 py-3 rounded-xl bg-dark-800/50 border border-green-500/20 hover:border-green-500/50 transition-all font-medium text-white">
+            <div id="modal-body" class="p-4 overflow-y-auto"></div>
+            <div class="p-4 border-t border-green-500/10 shrink-0">
+                <button onclick="closeDetailsModal()" class="w-full px-3 py-2 rounded-lg bg-dark-800/50 border border-green-500/10 hover:border-green-500/30 text-white text-sm font-medium transition-colors">
                     إغلاق
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- TOAST CONTAINER -->
-    <div id="toast-container" class="fixed top-24 left-4 z-[70] space-y-2">
-        <!-- Toasts will be rendered by JS -->
-    </div>
+    <!-- TOAST -->
+    <div id="toast-container" class="fixed top-20 left-3 z-[70] space-y-2"></div>
 
-<script>
-        // ==================== DATA ====================
+    <script>
+        // Data
         const booksData = [
             {
-                id: 'term1',
-                title: 'مجموعة كتب الترم الأول',
-                term: 'الترم الأول',
-                type: 'مدفوع',
-                price: 50,
-                downloads: 260,
+                id: 'term1', title: 'مجموعة كتب الترم الأول', term: 'الترم الأول', type: 'مدفوع',
+                price: 50, downloads: 260,
                 previewUrl: 'https://drive.google.com/file/d/1RWWkP_kD0WHCEQJtf-KX93FYVbD6Zpho/view',
-                tags: ['الصف الأول الثانوي', 'الترم الأول', 'مدفوع'],
-                details: [
-                    'كتاب شرح من الفصل 1 إلى الفصل 20',
-                    'شرح مفصل مع أمثلة ومسائل',
-                    'كتاب أسئلة من الفصل 1 إلى الفصل 17',
-                    'نموذج إجابة لجميع الأسئلة',
-                    'امتحان شامل من 60 سؤال',
-                    'ملخص من الفصل 1 إلى الفصل 17',
-                    'صيغة PDF جاهزة للتحميل',
-                    'عدد صفحات كتاب الشرح: 55 صفحة',
-                    'عدد صفحات كتاب الأسئلة: 75 صفحة'
-                ]
+                tags: ['الأول الثانوي', 'الترم الأول'],
+                details: ['شرح من الفصل 1 إلى 20', 'كتاب أسئلة من الفصل 1 إلى 17', 'نموذج إجابة شامل', 'امتحان 60 سؤال', 'ملخص شامل', 'صيغة PDF']
             },
             {
-                id: 'term2',
-                title: 'مجموعة كتب الترم الثاني',
-                term: 'الترم الثاني',
-                type: 'مدفوع',
-                price: 70,
-                downloads: 64,
+                id: 'term2', title: 'مجموعة كتب الترم الثاني', term: 'الترم الثاني', type: 'مدفوع',
+                price: 70, downloads: 64,
                 previewUrl: 'https://drive.google.com/file/d/1I7ETKP-ikPNUTxOjsbLPNa65mQv0Zj3Y/view',
-                tags: ['الصف الأول الثانوي', 'الترم الثاني', 'مدفوع'],
-                details: [
-                    'كتاب شرح من الفصل 21 إلى الفصل 42',
-                    'شرح مفصل مع أمثلة منصة كيرو',
-                    'كتاب أسئلة من الفصل 21 إلى الفصل 42',
-                    'امتحانان في نهاية الكتاب (20 سؤال كل)',
-                    'إجمالي 300 سؤال تدريبي',
-                    'نموذج إجابة شامل',
-                    'صيغة PDF جاهزة للتحميل',
-                    'عدد صفحات كتاب الشرح: 182 صفحة',
-                    'عدد صفحات كتاب الأسئلة: 103 صفحة'
-                ]
+                tags: ['الأول الثانوي', 'الترم الثاني'],
+                details: ['شرح من الفصل 21 إلى 42', '300 سؤال تدريبي', '2 امتحان نهائي', 'نموذج إجابة شامل', 'صيغة PDF']
             }
         ];
 
-        // ==================== STATE ====================
+        // State
         let cart = JSON.parse(localStorage.getItem('bookCart')) || [];
         let orderCopied = false;
 
-        // ==================== INITIALIZATION ====================
-        document.addEventListener('DOMContentLoaded', function() {
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
-            renderBooks(); // Initial render with animation trigger
+            renderBooks();
             updateCartUI();
             
             const hash = window.location.hash.slice(1);
-            if (hash && ['home', 'books', 'payment'].includes(hash)) {
-                navigateTo(hash);
-            }
+            if (hash && ['home', 'books', 'payment'].includes(hash)) navigateTo(hash);
             
-            // Trigger initial animations
             setTimeout(() => {
-                document.querySelectorAll('.page-section.active .stagger-item').forEach(item => {
-                    item.classList.add('visible');
+                document.querySelectorAll('.page-section.active .stagger-item').forEach((item, i) => {
+                    setTimeout(() => item.classList.add('visible'), i * 80);
                 });
             }, 100);
         });
 
-        // ==================== NAVIGATION ====================
+        // Navigation
         function navigateTo(page) {
-            document.querySelectorAll('.page-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            const targetPage = document.getElementById(`${page}-page`);
-            if (targetPage) {
-                targetPage.classList.add('active');
-                
-                // Trigger animations for the new page
-                setTimeout(() => {
-                    targetPage.querySelectorAll('.stagger-item').forEach((item, i) => {
-                        setTimeout(() => item.classList.add('visible'), i * 100);
-                    });
-                }, 50);
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(`${page}-page`);
+            if (target) {
+                target.classList.add('active');
+                setTimeout(() => target.querySelectorAll('.stagger-item').forEach((item, i) => setTimeout(() => item.classList.add('visible'), i * 80)), 50);
             }
-            
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-                if (link.dataset.nav === page) link.classList.add('active');
-            });
-            
+            document.querySelectorAll('.nav-link').forEach(l => { l.classList.remove('active'); if(l.dataset.nav === page) l.classList.add('active'); });
             window.location.hash = page;
             window.scrollTo({ top: 0, behavior: 'smooth' });
             closeAllSidebars();
-            
             return false;
         }
 
-        // ==================== MOBILE MENU ====================
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             const icon = document.getElementById('menu-icon');
@@ -977,354 +718,167 @@
             lucide.createIcons();
         }
 
-        // ==================== BOOKS RENDERING (FIXED) ====================
+        // Books
         function renderBooks() {
             const grid = document.getElementById('books-grid');
-            const emptyState = document.getElementById('empty-state');
-            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const empty = document.getElementById('empty-state');
+            const search = document.getElementById('search-input').value.toLowerCase();
             
-            // Get filter values
-            const termFilters = Array.from(document.querySelectorAll('[data-filter="term"]:checked')).map(cb => cb.value);
-            const typeFilters = Array.from(document.querySelectorAll('[data-filter="type"]:checked')).map(cb => cb.value);
+            const terms = Array.from(document.querySelectorAll('[data-filter="term"]:checked')).map(c => c.value);
+            const types = Array.from(document.querySelectorAll('[data-filter="type"]:checked')).map(c => c.value);
             
-            // Filter logic: If filter array is empty, show all (user friendly)
-            const filteredBooks = booksData.filter(book => {
-                const matchesSearch = book.title.toLowerCase().includes(searchTerm);
-                const matchesTerm = termFilters.length === 0 || termFilters.includes(book.term);
-                const matchesType = typeFilters.length === 0 || typeFilters.includes(book.type);
-                return matchesSearch && matchesTerm && matchesType;
+            const filtered = booksData.filter(b => {
+                const matchSearch = b.title.toLowerCase().includes(search);
+                const matchTerm = terms.length === 0 || terms.includes(b.term);
+                const matchType = types.length === 0 || types.includes(b.type);
+                return matchSearch && matchTerm && matchType;
             });
             
-            if (filteredBooks.length === 0) {
-                grid.innerHTML = '';
-                emptyState.classList.remove('hidden');
-            } else {
-                emptyState.classList.add('hidden');
-                grid.innerHTML = filteredBooks.map((book, index) => createBookCard(book, index)).join('');
-                
-                // IMPORTANT: Refresh Lucide icons for new HTML
+            if (filtered.length === 0) { grid.innerHTML = ''; empty.classList.remove('hidden'); } 
+            else {
+                empty.classList.add('hidden');
+                grid.innerHTML = filtered.map((b, i) => createCard(b, i)).join('');
                 lucide.createIcons();
-
-                // IMPORTANT: Trigger animation for newly added cards
-                requestAnimationFrame(() => {
-                    grid.querySelectorAll('.stagger-item').forEach((item, i) => {
-                        setTimeout(() => {
-                            item.classList.add('visible');
-                        }, i * 50); // Stagger delay
-                    });
-                });
+                requestAnimationFrame(() => grid.querySelectorAll('.stagger-item').forEach((item, i) => setTimeout(() => item.classList.add('visible'), i * 50)));
             }
         }
 
-        function createBookCard(book, index) {
-            const inCart = cart.some(item => item.id === book.id);
-            
+        function createCard(book, idx) {
+            const inCart = cart.some(i => i.id === book.id);
             return `
-                <div class="book-card rounded-3xl p-6 relative overflow-hidden stagger-item" style="animation-delay: ${index * 0.1}s;">
-                    <!-- Book Icon -->
-                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500/20 to-green-600/10 flex items-center justify-center mb-4">
-                        <i data-lucide="book-open" class="w-8 h-8 text-green-400"></i>
-                    </div>
-                    
-                    <!-- Title -->
-                    <h3 class="font-display font-bold text-xl text-white mb-3">${book.title}</h3>
-                    
-                    <!-- Tags -->
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        ${book.tags.map(tag => `
-                            <span class="px-3 py-1 rounded-full bg-dark-800/50 text-green-100/60 text-xs font-medium">${tag}</span>
-                        `).join('')}
-                    </div>
-                    
-                    <!-- Info -->
-                    <div class="flex items-center gap-4 mb-4 text-green-100/60 text-sm">
-                        <span class="flex items-center gap-1">
-                            <i data-lucide="download" class="w-4 h-4"></i>
-                            ${book.downloads} تحميل
-                        </span>
-                        <span class="flex items-center gap-1">
-                            <i data-lucide="user" class="w-4 h-4"></i>
-                            مهندس أحمد
-                        </span>
-                    </div>
-                    
-                    <!-- Price -->
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="font-black text-2xl text-green-400">${book.price} ج</span>
-                        ${book.type === 'مدفوع' ? `
-                            <span class="px-2 py-1 rounded-lg bg-amber-500/20 text-amber-400 text-xs font-medium">مدفوع</span>
-                        ` : `
-                            <span class="px-2 py-1 rounded-lg bg-green-500/20 text-green-400 text-xs font-medium">مجاني</span>
-                        `}
-                    </div>
-                    
-                    <!-- Actions -->
-                    <div class="grid grid-cols-3 gap-2">
-                        <a href="${book.previewUrl}" target="_blank" class="flex items-center justify-center gap-1 px-3 py-2 rounded-xl bg-dark-800/50 border border-green-500/20 hover:border-green-500/50 transition-all text-green-100 text-sm">
-                            <i data-lucide="eye" class="w-4 h-4"></i>
-                            معاينة
-                        </a>
-                        <button onclick="showBookDetails('${book.id}')" class="flex items-center justify-center gap-1 px-3 py-2 rounded-xl bg-dark-800/50 border border-green-500/20 hover:border-green-500/50 transition-all text-green-100 text-sm">
-                            <i data-lucide="info" class="w-4 h-4"></i>
-                            تفاصيل
-                        </button>
-                        <button 
-                            onclick="${inCart ? `removeFromCart('${book.id}')` : `addToCart('${book.id}')`}" 
-                            class="${inCart ? 'bg-red-500/20 border-red-500/50 text-red-400 hover:bg-red-500/30' : 'btn-primary text-dark-950'} flex items-center justify-center gap-1 px-3 py-2 rounded-xl text-sm font-medium transition-all border border-transparent">
-                            <i data-lucide="${inCart ? 'trash-2' : 'cart-plus'}" class="w-4 h-4"></i>
-                            ${inCart ? 'إزالة' : 'إضافة'}
-                        </button>
-                    </div>
+            <div class="book-card rounded-xl p-5 stagger-item">
+                <div class="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center mb-3">
+                    <i data-lucide="book-open" class="w-6 h-6 text-green-400"></i>
                 </div>
-            `;
+                <h3 class="font-bold text-white text-base mb-2">${book.title}</h3>
+                <div class="flex flex-wrap gap-1 mb-3">
+                    ${book.tags.map(t => `<span class="px-2 py-0.5 rounded bg-dark-800/50 text-green-100/50 text-xs">${t}</span>`).join('')}
+                </div>
+                <div class="flex items-center gap-3 mb-3 text-green-100/40 text-xs">
+                    <span class="flex items-center gap-1"><i data-lucide="download" class="w-3 h-3"></i>${book.downloads}</span>
+                    <span class="flex items-center gap-1"><i data-lucide="user" class="w-3 h-3"></i>م. أحمد</span>
+                </div>
+                <div class="flex items-center justify-between mb-3">
+                    <span class="font-black text-xl text-green-400">${book.price} ج</span>
+                    <span class="px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 text-xs">مدفوع</span>
+                </div>
+                <div class="grid grid-cols-3 gap-1.5">
+                    <a href="${book.previewUrl}" target="_blank" class="flex items-center justify-center gap-1 px-2 py-1.5 rounded bg-dark-800/50 border border-green-500/10 text-green-100/70 text-xs hover:border-green-500/30 transition-colors">
+                        <i data-lucide="eye" class="w-3 h-3"></i>معاينة
+                    </a>
+                    <button onclick="showBookDetails('${book.id}')" class="flex items-center justify-center gap-1 px-2 py-1.5 rounded bg-dark-800/50 border border-green-500/10 text-green-100/70 text-xs hover:border-green-500/30 transition-colors">
+                        <i data-lucide="info" class="w-3 h-3"></i>تفاصيل
+                    </button>
+                    <button onclick="${inCart ? `removeFromCart('${book.id}')` : `addToCart('${book.id}')`}" class="${inCart ? 'bg-red-500/20 border-red-500/30 text-red-400' : 'btn-primary text-dark-950'} flex items-center justify-center gap-1 px-2 py-1.5 rounded text-xs font-medium border transition-colors">
+                        <i data-lucide="${inCart ? 'trash-2' : 'cart-plus'}" class="w-3 h-3"></i>${inCart ? 'إزالة' : 'إضافة'}
+                    </button>
+                </div>
+            </div>`;
         }
 
-        // ==================== BOOK DETAILS ====================
-        function showBookDetails(bookId) {
-            const book = booksData.find(b => b.id === bookId);
-            if (!book) return;
-            
-            const modal = document.getElementById('details-modal');
-            const title = document.getElementById('modal-title');
-            const body = document.getElementById('modal-body');
-            
-            title.textContent = book.title;
-            body.innerHTML = `
-                <div class="space-y-4">
-                    ${book.details.map(detail => `
-                        <div class="flex items-start gap-3">
-                            <div class="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center shrink-0 mt-0.5">
-                                <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
-                            </div>
-                            <span class="text-green-100/80">${detail}</span>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-            
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+        function showBookDetails(id) {
+            const b = booksData.find(x => x.id === id);
+            if(!b) return;
+            document.getElementById('modal-title').textContent = b.title;
+            document.getElementById('modal-body').innerHTML = `<div class="space-y-2">${b.details.map(d => `<div class="flex items-start gap-2"><div class="w-5 h-5 rounded bg-green-500/20 flex items-center justify-center shrink-0 mt-0.5"><i data-lucide="check" class="w-3 h-3 text-green-400"></i></div><span class="text-green-100/70 text-sm">${d}</span></div>`).join('')}</div>`;
+            const m = document.getElementById('details-modal');
+            m.classList.remove('hidden'); m.classList.add('flex');
             lucide.createIcons();
         }
+        function closeDetailsModal() { document.getElementById('details-modal').classList.add('hidden'); document.getElementById('details-modal').classList.remove('flex'); }
 
-        function closeDetailsModal() {
-            const modal = document.getElementById('details-modal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        }
+        function filterBooks() { renderBooks(); }
+        function clearFilters() { document.querySelectorAll('[data-filter]').forEach(c => c.checked = true); document.getElementById('search-input').value = ''; renderBooks(); }
 
-        function filterBooks() {
-            renderBooks();
-        }
-
-        function clearFilters() {
-            document.querySelectorAll('[data-filter]').forEach(cb => cb.checked = true);
-            document.getElementById('search-input').value = '';
-            renderBooks();
-        }
-
-        // ==================== CART FUNCTIONS ====================
+        // Cart
         function toggleCart() {
-            const sidebar = document.getElementById('cart-sidebar');
-            const overlay = document.getElementById('cart-overlay');
-            
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('hidden');
-            document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+            const s = document.getElementById('cart-sidebar'), o = document.getElementById('cart-overlay');
+            s.classList.toggle('active'); o.classList.toggle('hidden');
+            document.body.style.overflow = s.classList.contains('active') ? 'hidden' : '';
         }
 
-        function addToCart(bookId) {
-            const book = booksData.find(b => b.id === bookId);
-            if (!book) return;
-            
-            if (cart.some(item => item.id === bookId)) {
-                showToast('هذا الكتاب موجود بالفعل في السلة', 'warning');
-                return;
-            }
-            
-            cart.push({ id: book.id, title: book.title, price: book.price, quantity: 1 });
-            
-            saveCart();
-            updateCartUI();
-            renderBooks(); // Re-render to update button state
-            showToast(`تمت إضافة "${book.title}" إلى السلة`, 'success');
+        function addToCart(id) {
+            const b = booksData.find(x => x.id === id);
+            if(!b || cart.some(i => i.id === id)) { showToast('موجود بالفعل', 'warning'); return; }
+            cart.push({ id: b.id, title: b.title, price: b.price, qty: 1 });
+            saveCart(); updateCartUI(); renderBooks();
+            showToast(`تم إضافة "${b.title}"`, 'success');
         }
 
-        function removeFromCart(bookId) {
-            const book = cart.find(item => item.id === bookId);
-            cart = cart.filter(item => item.id !== bookId);
-            saveCart();
-            updateCartUI();
-            renderBooks(); // Re-render to update button state
-            if (book) showToast(`تمت إزالة "${book.title}" من السلة`, 'info');
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.id !== id);
+            saveCart(); updateCartUI(); renderBooks();
+            showToast('تم الحذف', 'info');
         }
 
-        function updateQuantity(bookId, change) {
-            const item = cart.find(i => i.id === bookId);
-            if (!item) return;
-            item.quantity = Math.max(1, item.quantity + change);
-            saveCart();
-            updateCartUI();
+        function updateQuantity(id, d) {
+            const i = cart.find(x => x.id === id);
+            if(i) { i.qty = Math.max(1, i.qty + d); saveCart(); updateCartUI(); }
         }
 
-        function saveCart() {
-            localStorage.setItem('bookCart', JSON.stringify(cart));
-        }
+        function saveCart() { localStorage.setItem('bookCart', JSON.stringify(cart)); }
 
         function updateCartUI() {
-            const badge = document.getElementById('cart-badge');
-            const itemsContainer = document.getElementById('cart-items');
-            const footer = document.getElementById('cart-footer');
-            const totalEl = document.getElementById('cart-total');
-            const checkoutBtn = document.getElementById('checkout-btn');
-            
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            badge.textContent = totalItems;
-            
-            if (cart.length === 0) {
-                itemsContainer.innerHTML = `
-                    <div class="text-center py-12">
-                        <i data-lucide="shopping-bag" class="w-16 h-16 text-green-100/20 mx-auto mb-4"></i>
-                        <p class="text-green-100/60">السلة فارغة</p>
-                    </div>
-                `;
+            const badge = document.getElementById('cart-badge'), items = document.getElementById('cart-items'), footer = document.getElementById('cart-footer'), total = document.getElementById('cart-total'), btn = document.getElementById('checkout-btn');
+            badge.textContent = cart.reduce((s, i) => s + i.qty, 0);
+            if(cart.length === 0) {
+                items.innerHTML = '<div class="text-center py-8"><i data-lucide="shopping-bag" class="w-10 h-10 text-green-100/10 mx-auto mb-2"></i><p class="text-green-100/40 text-sm">السلة فارغة</p></div>';
                 footer.classList.add('hidden');
             } else {
-                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-                
-                itemsContainer.innerHTML = cart.map(item => `
-                    <div class="p-4 rounded-2xl bg-dark-800/30 border border-green-500/10 mb-3">
-                        <div class="flex justify-between items-start mb-3">
-                            <div>
-                                <h4 class="font-bold text-white">${item.title}</h4>
-                                <p class="text-green-400 font-bold">${item.price} ج</p>
-                            </div>
-                            <button onclick="removeFromCart('${item.id}')" class="p-2 rounded-lg hover:bg-red-500/20 transition-colors">
-                                <i data-lucide="trash-2" class="w-4 h-4 text-red-400"></i>
-                            </button>
+                const t = cart.reduce((s, i) => s + i.price * i.qty, 0);
+                items.innerHTML = cart.map(i => `
+                    <div class="p-3 rounded-lg bg-dark-900/30 border border-green-500/5 mb-2">
+                        <div class="flex justify-between items-start mb-2">
+                            <div><h4 class="font-bold text-white text-sm">${i.title}</h4><p class="text-green-400 text-xs">${i.price} ج</p></div>
+                            <button onclick="removeFromCart('${i.id}')" class="p-1 rounded hover:bg-red-500/10"><i data-lucide="trash-2" class="w-3 h-3 text-red-400"></i></button>
                         </div>
-                        <div class="flex items-center gap-3">
-                            <button onclick="updateQuantity('${item.id}', -1)" class="qty-btn">
-                                <i data-lucide="minus" class="w-4 h-4 text-white"></i>
-                            </button>
-                            <span class="font-bold text-white w-8 text-center">${item.quantity}</span>
-                            <button onclick="updateQuantity('${item.id}', 1)" class="qty-btn">
-                                <i data-lucide="plus" class="w-4 h-4 text-white"></i>
-                            </button>
-                            <span class="mr-auto text-green-100/60">${item.price * item.quantity} ج</span>
+                        <div class="flex items-center gap-2">
+                            <button onclick="updateQuantity('${i.id}', -1)" class="w-6 h-6 rounded bg-dark-800/50 flex items-center justify-center"><i data-lucide="minus" class="w-3 h-3 text-white"></i></button>
+                            <span class="text-white text-sm w-6 text-center">${i.qty}</span>
+                            <button onclick="updateQuantity('${i.id}', 1)" class="w-6 h-6 rounded bg-dark-800/50 flex items-center justify-center"><i data-lucide="plus" class="w-3 h-3 text-white"></i></button>
+                            <span class="mr-auto text-green-100/50 text-xs">${i.price * i.qty} ج</span>
                         </div>
-                    </div>
-                `).join('');
-                
-                totalEl.textContent = `${total} ج`;
-                footer.classList.remove('hidden');
-                checkoutBtn.disabled = !orderCopied;
+                    </div>`).join('');
+                total.textContent = t + ' ج'; footer.classList.remove('hidden'); btn.disabled = !orderCopied;
             }
             lucide.createIcons();
         }
 
         function copyOrder() {
-            if (cart.length === 0) {
-                showToast('السلة فارغة', 'warning');
-                return;
-            }
-            
-            let orderText = 'تفاصيل الطلب:\n';
-            let total = 0;
-            
-            cart.forEach(item => {
-                orderText += `- ${item.title} (${item.quantity}x): ${item.price * item.quantity} ج\n`;
-                total += item.price * item.quantity;
-            });
-            
-            orderText += `\nالإجمالي: ${total} ج`;
-            
-            navigator.clipboard.writeText(orderText).then(() => {
-                orderCopied = true;
-                updateCartUI();
-                showToast('تم نسخ تفاصيل الطلب', 'success');
-            }).catch(() => {
-                showToast('فشل نسخ الطلب', 'error');
-            });
+            if(cart.length === 0) return;
+            let t = cart.reduce((s, i) => s + i.price * i.qty, 0);
+            let txt = 'طلب جديد:\n' + cart.map(i => `- ${i.title} (${i.qty}x): ${i.price*i.qty} ج`).join('\n') + `\nالإجمالي: ${t} ج`;
+            navigator.clipboard.writeText(txt).then(() => { orderCopied = true; updateCartUI(); showToast('تم نسخ الطلب', 'success'); });
         }
 
-        function proceedToCheckout() {
-            if (!orderCopied) {
-                showToast('يرجى نسخ الطلب أولاً', 'warning');
-                return;
-            }
-            toggleCart();
-            navigateTo('payment');
-        }
+        function proceedToCheckout() { if(!orderCopied) { showToast('انسخ الطلب أولاً', 'warning'); return; } toggleCart(); navigateTo('payment'); }
 
-        // ==================== FILTER SIDEBAR ====================
+        // Filter
         function toggleFilter() {
-            const sidebar = document.getElementById('filter-sidebar');
-            const overlay = document.getElementById('filter-overlay');
-            
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('hidden');
-            document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+            const s = document.getElementById('filter-sidebar'), o = document.getElementById('filter-overlay');
+            s.classList.toggle('active'); o.classList.toggle('hidden');
+            document.body.style.overflow = s.classList.contains('active') ? 'hidden' : '';
         }
 
         function closeAllSidebars() {
-            document.getElementById('cart-sidebar').classList.remove('active');
-            document.getElementById('cart-overlay').classList.add('hidden');
-            document.getElementById('filter-sidebar').classList.remove('active');
-            document.getElementById('filter-overlay').classList.add('hidden');
+            ['cart', 'filter'].forEach(id => { document.getElementById(`${id}-sidebar`).classList.remove('active'); document.getElementById(`${id}-overlay`).classList.add('hidden'); });
             document.body.style.overflow = '';
         }
 
-        // ==================== TOAST NOTIFICATIONS ====================
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toast-container');
-            const id = Date.now();
-            
-            const colors = {
-                success: 'from-green-500 to-green-600',
-                error: 'from-red-500 to-red-600',
-                warning: 'from-amber-500 to-amber-600',
-                info: 'from-blue-500 to-blue-600'
-            };
-            
-            const icons = {
-                success: 'check-circle',
-                error: 'x-circle',
-                warning: 'alert-triangle',
-                info: 'info'
-            };
-            
-            const toast = document.createElement('div');
-            toast.id = `toast-${id}`;
-            toast.className = `toast-enter flex items-center gap-3 px-4 py-3 rounded-xl bg-dark-900/90 backdrop-blur-xl border border-green-500/20 min-w-[280px]`;
-            toast.innerHTML = `
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-br ${colors[type]} flex items-center justify-center shrink-0">
-                    <i data-lucide="${icons[type]}" class="w-4 h-4 text-white"></i>
-                </div>
-                <span class="text-green-100 font-medium">${message}</span>
-            `;
-            
-            container.appendChild(toast);
-            lucide.createIcons();
-            
-            setTimeout(() => {
-                const el = document.getElementById(`toast-${id}`);
-                if (el) {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateX(-20px)';
-                    el.style.transition = 'all 0.3s ease';
-                    setTimeout(() => el.remove(), 300);
-                }
-            }, 3000);
+        // Toast
+        function showToast(msg, type = 'info') {
+            const c = document.getElementById('toast-container'), id = Date.now();
+            const colors = { success: 'bg-green-500', error: 'bg-red-500', warning: 'bg-amber-500', info: 'bg-blue-500' };
+            const icons = { success: 'check-circle', error: 'x-circle', warning: 'alert-triangle', info: 'info' };
+            const t = document.createElement('div');
+            t.id = `toast-${id}`;
+            t.className = 'toast-enter flex items-center gap-2 px-3 py-2 rounded-lg bg-dark-900/90 border border-green-500/10 min-w-[200px]';
+            t.innerHTML = `<div class="w-6 h-6 rounded ${colors[type]} flex items-center justify-center shrink-0"><i data-lucide="${icons[type]}" class="w-3 h-3 text-white"></i></div><span class="text-green-100 text-xs font-medium">${msg}</span>`;
+            c.appendChild(t); lucide.createIcons();
+            setTimeout(() => { const el = document.getElementById(`toast-${id}`); if(el) { el.style.opacity = '0'; setTimeout(() => el.remove(), 300); }}, 2500);
         }
 
-        // ==================== HASH CHANGE ====================
-        window.addEventListener('hashchange', function() {
-            const hash = window.location.hash.slice(1);
-            if (hash && ['home', 'books', 'payment'].includes(hash)) {
-                navigateTo(hash);
-            }
-        });
+        window.addEventListener('hashchange', () => { const h = window.location.hash.slice(1); if(h && ['home','books','payment'].includes(h)) navigateTo(h); });
     </script>
 </body>
 </html>
