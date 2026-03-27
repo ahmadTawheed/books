@@ -334,6 +334,16 @@
             height: 300px;
         }
 
+        /* Free Badge */
+        .free-badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        /* Sample Badge */
+        .sample-badge {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+        }
+
         @media (max-width: 768px) {
             .hero-text { font-size: 2.5rem; line-height: 1.2; }
         }
@@ -601,20 +611,14 @@
                         نموذج الطلب
                     </h2>
                     
-                    <form id="order-form" action="https://formsubmit.co/ahmadtawheed74@gmail.com" method="POST" enctype="multipart/form-data" class="space-y-5 p-6 rounded-2xl bg-gradient-to-br from-dark-900/80 to-dark-800/50 border border-green-500/10">
-                        <!-- Hidden fields for FormSubmit -->
-                        <input type="hidden" name="_subject" value="طلب جديد - كتب البرمجة">
-                        <input type="hidden" name="_captcha" value="false">
-                        <input type="hidden" name="_template" value="table">
-                        <input type="text" name="_honey" style="display:none">
-                        
+                    <form id="order-form" class="space-y-5 p-6 rounded-2xl bg-gradient-to-br from-dark-900/80 to-dark-800/50 border border-green-500/10">
                         <!-- Name -->
                         <div>
                             <label class="block text-green-100/80 text-sm font-medium mb-2">
                                 <i data-lucide="user" class="w-4 h-4 inline ml-1"></i>
                                 الاسم الكامل
                             </label>
-                            <input type="text" name="name" required class="form-input" placeholder="أدخل اسمك الكامل">
+                            <input type="text" id="form-name" required class="form-input" placeholder="أدخل اسمك الكامل">
                         </div>
                         
                         <!-- Email -->
@@ -623,7 +627,7 @@
                                 <i data-lucide="mail" class="w-4 h-4 inline ml-1"></i>
                                 البريد الإلكتروني
                             </label>
-                            <input type="email" name="email" required class="form-input" placeholder="example@email.com">
+                            <input type="email" id="form-email" required class="form-input" placeholder="example@email.com">
                         </div>
                         
                         <!-- Phone -->
@@ -632,7 +636,7 @@
                                 <i data-lucide="phone" class="w-4 h-4 inline ml-1"></i>
                                 رقم الهاتف (واتساب)
                             </label>
-                            <input type="tel" name="phone" required class="form-input" placeholder="01xxxxxxxxx" dir="ltr">
+                            <input type="tel" id="form-phone" required class="form-input" placeholder="01xxxxxxxxx" dir="ltr">
                         </div>
                         
                         <!-- Books Selection -->
@@ -641,17 +645,8 @@
                                 <i data-lucide="book" class="w-4 h-4 inline ml-1"></i>
                                 الكتب المطلوبة
                             </label>
-                            <div class="space-y-2 p-4 rounded-xl bg-dark-950/50 border border-green-500/10">
-                                <label class="flex items-center gap-3 cursor-pointer p-2 rounded-lg hover:bg-green-500/5 transition-colors">
-                                    <input type="checkbox" name="books" value="كتاب الشرح الترم الأول - 80 جنيه" class="custom-checkbox">
-                                    <span class="text-green-100/80 text-sm">كتاب الشرح الترم الأول</span>
-                                    <span class="text-green-400 text-sm font-bold mr-auto">80 ج</span>
-                                </label>
-                                <label class="flex items-center gap-3 cursor-pointer p-2 rounded-lg hover:bg-green-500/5 transition-colors">
-                                    <input type="checkbox" name="books" value="مجموعة كتب الترم الثاني - 70 جنيه" class="custom-checkbox">
-                                    <span class="text-green-100/80 text-sm">مجموعة كتب الترم الثاني</span>
-                                    <span class="text-green-400 text-sm font-bold mr-auto">70 ج</span>
-                                </label>
+                            <div id="books-selection" class="space-y-2 p-4 rounded-xl bg-dark-950/50 border border-green-500/10">
+                                <!-- Will be populated by JS -->
                             </div>
                         </div>
                         
@@ -670,7 +665,7 @@
                                 صورة إيصال التحويل
                             </label>
                             <div class="relative">
-                                <input type="file" name="attachment" accept="image/*" capture="environment" class="hidden" id="receipt-input" onchange="handleFileSelect(event)">
+                                <input type="file" accept="image/*" capture="environment" class="hidden" id="receipt-input" onchange="handleFileSelect(event)">
                                 <button type="button" onclick="document.getElementById('receipt-input').click()" class="w-full p-4 rounded-xl border-2 border-dashed border-green-500/20 hover:border-green-500/40 transition-colors text-center">
                                     <div id="file-preview" class="hidden">
                                         <img id="preview-image" class="max-h-32 mx-auto rounded-lg mb-2">
@@ -690,13 +685,13 @@
                                 <i data-lucide="message-square" class="w-4 h-4 inline ml-1"></i>
                                 ملاحظات إضافية (اختياري)
                             </label>
-                            <textarea name="notes" rows="3" class="form-input resize-none" placeholder="أي ملاحظات أو طلبات خاصة..."></textarea>
+                            <textarea id="form-notes" rows="3" class="form-input resize-none" placeholder="أي ملاحظات أو طلبات خاصة..."></textarea>
                         </div>
                         
                         <!-- Submit Button -->
                         <button type="submit" class="btn-primary w-full py-4 rounded-xl font-bold text-dark-950 text-base flex items-center justify-center gap-2">
                             <i data-lucide="send" class="w-5 h-5"></i>
-                            إرسال الطلب
+                            إرسال الطلب عبر واتساب
                         </button>
                         
                         <p class="text-green-100/40 text-xs text-center">
@@ -767,6 +762,23 @@
                         <input type="checkbox" class="custom-checkbox" data-filter="type" value="مجاني" onchange="filterBooks()" checked>
                         <span class="text-green-100/70 text-sm">مجاني</span>
                     </label>
+                    <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-dark-800/30">
+                        <input type="checkbox" class="custom-checkbox" data-filter="type" value="عينة" onchange="filterBooks()" checked>
+                        <span class="text-green-100/70 text-sm">عينة مجانية</span>
+                    </label>
+                </div>
+            </div>
+            <div>
+                <h3 class="font-bold text-white text-sm mb-2">السنة</h3>
+                <div class="space-y-1">
+                    <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-dark-800/30">
+                        <input type="checkbox" class="custom-checkbox" data-filter="year" value="2025" onchange="filterBooks()" checked>
+                        <span class="text-green-100/70 text-sm">2025</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-dark-800/30">
+                        <input type="checkbox" class="custom-checkbox" data-filter="year" value="2026" onchange="filterBooks()" checked>
+                        <span class="text-green-100/70 text-sm">2026</span>
+                    </label>
                 </div>
             </div>
         </div>
@@ -800,42 +812,196 @@
     <div id="toast-container" class="fixed top-20 left-3 z-[70] space-y-2"></div>
 
     <script>
+        // WhatsApp Number
+        const WHATSAPP_NUMBER = '201501021670';
+        
         // Data
         const booksData = [
+            // الترم الأول 2025
             {
-                id: 'term1', 
-                title: 'كتاب الشرح الترم الأول', 
+                id: 'sample1_2025', 
+                title: 'عينة من كتب الترم 1 – 2025', 
                 term: 'الترم الأول', 
-                type: 'مدفوع',
-                price: 80, 
-                downloads: 308,
-                previewUrl: 'https://drive.google.com/file/d/1X5QXj_f7Voz17KQ_DNXifMz4054ZTdvP/view?usp=sharing',
-                downloadUrl: 'https://drive.google.com/file/d/1X5QXj_f7Voz17KQ_DNXifMz4054ZTdvP/view?usp=sharing',
-                tags: ['الأول الثانوي', 'الترم الأول'],
+                type: 'عينة',
+                year: '2025',
+                price: 0, 
+                downloads: 150,
+                previewUrl: 'https://drive.google.com/file/d/1RWWkP_kD0WHCEQJtf-KX93FYVbD6Zpho/view?usp=sharing',
+                downloadUrl: 'https://drive.google.com/file/d/1RWWkP_kD0WHCEQJtf-KX93FYVbD6Zpho/view?usp=sharing',
+                tags: ['الأول الثانوي', 'الترم الأول', '2025', 'عينة مجانية'],
                 details: [
-                    "شرح من الفصل 1 لـ 17",
-                    "جميع أسئلة المنصة موجودة",
-                    "شرح باللغة العامية لزيادة الفهم",
-                    "امتحان من 38 سؤال في نهاية الكتاب",
-                    "استلام الكتاب بصيغة PDF عالية الجودة"
+                    "عينة مجانية من كتاب الترم الأول",
+                    "لمحة عن محتوى الكتاب",
+                    "معاينة قبل الشراء",
+                    "صيغة PDF عالية الجودة"
                 ]
             },
             {
-                id: 'term2', 
-                title: 'مجموعة كتب الترم الثاني', 
+                id: 'explain1_2025', 
+                title: 'كتاب الشرح 2025', 
+                term: 'الترم الأول', 
+                type: 'مجاني',
+                year: '2025',
+                price: 0, 
+                downloads: 200,
+                note: 'مجاناً مع كتاب الأسئلة',
+                previewUrl: 'https://drive.google.com/file/d/1ogM-iJxNcmxO11T--Reo4g1tmZe3hIua/view?usp=sharing',
+                downloadUrl: 'https://drive.google.com/file/d/1ogM-iJxNcmxO11T--Reo4g1tmZe3hIua/view?usp=sharing',
+                tags: ['الأول الثانوي', 'الترم الأول', '2025'],
+                details: [
+                    "شرح شامل للترم الأول",
+                    "مجاناً مع كتاب الأسئلة",
+                    "شرح باللغة العامية لزيادة الفهم",
+                    "صيغة PDF عالية الجودة"
+                ]
+            },
+            {
+                id: 'questions1_2025', 
+                title: 'كتاب الأسئلة 2025', 
+                term: 'الترم الأول', 
+                type: 'مدفوع',
+                year: '2025',
+                price: 60, 
+                downloads: 180,
+                previewUrl: 'https://drive.google.com/file/d/1ISiOjtsI24_Kx-j6Nt071Ag_fbgZM3u_/view?usp=sharing',
+                downloadUrl: 'https://drive.google.com/file/d/1ISiOjtsI24_Kx-j6Nt071Ag_fbgZM3u_/view?usp=sharing',
+                tags: ['الأول الثانوي', 'الترم الأول', '2025'],
+                details: [
+                    "أسئلة متنوعة وشاملة",
+                    "نماذج إجابة مفصلة",
+                    "أسئلة على كل فصل",
+                    "صيغة PDF"
+                ]
+            },
+            {
+                id: 'summary1_2025', 
+                title: 'ورقة الملخص', 
+                term: 'الترم الأول', 
+                type: 'مجاني',
+                year: '2025',
+                price: 0, 
+                downloads: 120,
+                note: 'مجاناً مع كتاب الأسئلة',
+                previewUrl: 'https://drive.google.com/file/d/1OI_svEub_mNn1RoVDFula1RyQFZLdr_4/view?usp=drive_link',
+                downloadUrl: 'https://drive.google.com/file/d/1OI_svEub_mNn1RoVDFula1RyQFZLdr_4/view?usp=drive_link',
+                tags: ['الأول الثانوي', 'الترم الأول', '2025', 'ملخص'],
+                details: [
+                    "ملخص شامل للترم الأول",
+                    "مجاناً مع كتاب الأسئلة",
+                    "مراجعة سريعة قبل الامتحان",
+                    "صيغة PDF"
+                ]
+            },
+            // الترم الأول 2026
+            {
+                id: 'sample1_2026', 
+                title: 'عينة من كتب الترم 1 – 2026', 
+                term: 'الترم الأول', 
+                type: 'عينة',
+                year: '2026',
+                price: 0, 
+                downloads: 80,
+                previewUrl: 'https://drive.google.com/file/d/1iVmRONEWTFY6zo4nu0n4D23t23X3VZ3o/view?usp=drive_link',
+                downloadUrl: 'https://drive.google.com/file/d/1iVmRONEWTFY6zo4nu0n4D23t23X3VZ3o/view?usp=drive_link',
+                tags: ['الأول الثانوي', 'الترم الأول', '2026', 'عينة مجانية'],
+                details: [
+                    "عينة مجانية من كتاب الترم الأول 2026",
+                    "لمحة عن محتوى الكتاب الجديد",
+                    "معاينة قبل الشراء",
+                    "صيغة PDF عالية الجودة"
+                ]
+            },
+            {
+                id: 'explain1_2026', 
+                title: 'كتاب الشرح 2026', 
+                term: 'الترم الأول', 
+                type: 'مجاني',
+                year: '2026',
+                price: 0, 
+                downloads: 95,
+                note: 'مجاناً مع كتاب الأسئلة',
+                previewUrl: 'https://drive.google.com/file/d/1QfUWv8EywTjavnWojbTpkhjLZiH7juzq/view?usp=sharing',
+                downloadUrl: 'https://drive.google.com/file/d/1QfUWv8EywTjavnWojbTpkhjLZiH7juzq/view?usp=sharing',
+                tags: ['الأول الثانوي', 'الترم الأول', '2026'],
+                details: [
+                    "شرح شامل للترم الأول 2026",
+                    "مجاناً مع كتاب الأسئلة",
+                    "شرح باللغة العامية",
+                    "صيغة PDF عالية الجودة"
+                ]
+            },
+            {
+                id: 'questions1_2026', 
+                title: 'كتاب الأسئلة 2026', 
+                term: 'الترم الأول', 
+                type: 'مدفوع',
+                year: '2026',
+                price: 90, 
+                downloads: 70,
+                previewUrl: 'https://drive.google.com/file/d/1TDRFn6F_ag1Ygs0fD5jva2JlK0MCivlX/view?usp=sharing',
+                downloadUrl: 'https://drive.google.com/file/d/1TDRFn6F_ag1Ygs0fD5jva2JlK0MCivlX/view?usp=sharing',
+                tags: ['الأول الثانوي', 'الترم الأول', '2026'],
+                details: [
+                    "أسئلة متنوعة وشاملة 2026",
+                    "نماذج إجابة مفصلة",
+                    "أسئلة على كل فصل",
+                    "صيغة PDF"
+                ]
+            },
+            // الترم الثاني 2026
+            {
+                id: 'sample2_2026', 
+                title: 'عينة من كتب ترم 2 – 2026', 
+                term: 'الترم الثاني', 
+                type: 'عينة',
+                year: '2026',
+                price: 0, 
+                downloads: 60,
+                previewUrl: 'https://drive.google.com/file/d/1I7ETKP-ikPNUTxOjsbLPNa65mQv0Zj3Y/view?usp=drive_link',
+                downloadUrl: 'https://drive.google.com/file/d/1I7ETKP-ikPNUTxOjsbLPNa65mQv0Zj3Y/view?usp=drive_link',
+                tags: ['الأول الثانوي', 'الترم الثاني', '2026', 'عينة مجانية'],
+                details: [
+                    "عينة مجانية من كتاب الترم الثاني",
+                    "لمحة عن محتوى الكتاب",
+                    "معاينة قبل الشراء",
+                    "صيغة PDF عالية الجودة"
+                ]
+            },
+            {
+                id: 'explain2_2026', 
+                title: 'كتاب الشرح ترم 2 – 2026', 
+                term: 'الترم الثاني', 
+                type: 'مجاني',
+                year: '2026',
+                price: 0, 
+                downloads: 85,
+                note: 'مجاناً مع كتاب الأسئلة',
+                previewUrl: 'https://drive.google.com/file/d/1TsPkoPkZL1Hl9yT_ZP0I8oESXrtQoseL/view?usp=sharing',
+                downloadUrl: 'https://drive.google.com/file/d/1TsPkoPkZL1Hl9yT_ZP0I8oESXrtQoseL/view?usp=sharing',
+                tags: ['الأول الثانوي', 'الترم الثاني', '2026'],
+                details: [
+                    "شرح شامل للترم الثاني 2026",
+                    "مجاناً مع كتاب الأسئلة",
+                    "شرح باللغة العامية",
+                    "صيغة PDF عالية الجودة"
+                ]
+            },
+            {
+                id: 'questions2_2026', 
+                title: 'كتاب الأسئلة ترم 2 – 2026', 
                 term: 'الترم الثاني', 
                 type: 'مدفوع',
+                year: '2026',
                 price: 70, 
-                downloads: 64,
-                previewUrl: 'https://drive.google.com/file/d/1I7ETKP-ikPNUTxOjsbLPNa65mQv0Zj3Y/view',
-                downloadUrl: 'https://drive.google.com/file/d/1I7ETKP-ikPNUTxOjsbLPNa65mQv0Zj3Y/view',
-                tags: ['الأول الثانوي', 'الترم الثاني'],
+                downloads: 55,
+                previewUrl: 'https://drive.google.com/file/d/1893GQwUNureqFTR7dltpBJbZ0kbn1jBc/view?usp=sharing',
+                downloadUrl: 'https://drive.google.com/file/d/1893GQwUNureqFTR7dltpBJbZ0kbn1jBc/view?usp=sharing',
+                tags: ['الأول الثانوي', 'الترم الثاني', '2026'],
                 details: [
-                    'شرح من الفصل 21 إلى 42', 
-                    '300 سؤال تدريبي', 
-                    '2 امتحان نهائي', 
-                    'نموذج إجابة شامل', 
-                    'صيغة PDF'
+                    "أسئلة متنوعة وشاملة للترم الثاني",
+                    "نماذج إجابة مفصلة",
+                    "أسئلة على كل فصل",
+                    "صيغة PDF"
                 ]
             }
         ];
@@ -844,6 +1010,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
             renderBooks();
+            populateBooksSelection();
             
             const hash = window.location.hash.slice(1);
             if (hash && ['home', 'books', 'payment'].includes(hash)) navigateTo(hash);
@@ -854,10 +1021,8 @@
                 });
             }, 100);
 
-            // Add event listeners for book checkboxes
-            document.querySelectorAll('input[name="books"]').forEach(checkbox => {
-                checkbox.addEventListener('change', updateTotal);
-            });
+            // Form submission
+            document.getElementById('order-form').addEventListener('submit', handleFormSubmit);
         });
 
         // Navigation
@@ -891,12 +1056,14 @@
             
             const terms = Array.from(document.querySelectorAll('[data-filter="term"]:checked')).map(c => c.value);
             const types = Array.from(document.querySelectorAll('[data-filter="type"]:checked')).map(c => c.value);
+            const years = Array.from(document.querySelectorAll('[data-filter="year"]:checked')).map(c => c.value);
             
             const filtered = booksData.filter(b => {
                 const matchSearch = b.title.toLowerCase().includes(search);
                 const matchTerm = terms.length === 0 || terms.includes(b.term);
                 const matchType = types.length === 0 || types.includes(b.type);
-                return matchSearch && matchTerm && matchType;
+                const matchYear = years.length === 0 || years.includes(b.year);
+                return matchSearch && matchTerm && matchType && matchYear;
             });
             
             if (filtered.length === 0) { 
@@ -911,6 +1078,61 @@
         }
 
         function createCard(book, idx) {
+            const isSample = book.type === 'عينة';
+            const isPaid = book.type === 'مدفوع';
+            const isFree = book.type === 'مجاني';
+            
+            // Badge based on type
+            let badge = '';
+            if (isSample) {
+                badge = `<span class="px-1.5 py-0.5 rounded sample-badge text-white text-xs">عينة مجانية</span>`;
+            } else if (isPaid) {
+                badge = `<span class="px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 text-xs">مدفوع</span>`;
+            } else {
+                badge = `<span class="px-1.5 py-0.5 rounded free-badge text-white text-xs">مجاني</span>`;
+            }
+            
+            // Price display
+            let priceDisplay = '';
+            if (book.price > 0) {
+                priceDisplay = `<span class="font-black text-xl text-green-400">${book.price} ج</span>`;
+            } else if (book.note) {
+                priceDisplay = `<span class="text-green-400 text-sm font-medium">${book.note}</span>`;
+            } else {
+                priceDisplay = `<span class="font-bold text-green-400 text-lg">مجاني</span>`;
+            }
+            
+            // Buttons - different for samples vs others
+            let buttons = '';
+            if (isSample) {
+                // Samples: مشاهدة - تحميل - تفاصيل
+                buttons = `
+                    <div class="grid grid-cols-3 gap-2">
+                        <a href="${book.previewUrl}" target="_blank" class="flex items-center justify-center gap-1 px-2 py-2 rounded-lg bg-dark-800/50 border border-green-500/10 text-green-100/70 text-xs hover:border-green-500/30 transition-colors">
+                            <i data-lucide="eye" class="w-3 h-3"></i>مشاهدة
+                        </a>
+                        <a href="${book.downloadUrl}" target="_blank" class="download-btn btn-primary flex items-center justify-center gap-1 px-2 py-2 rounded-lg text-dark-950 text-xs font-bold">
+                            <i data-lucide="download" class="w-3 h-3"></i>تحميل
+                        </a>
+                        <button onclick="showBookDetails('${book.id}')" class="flex items-center justify-center gap-1 px-2 py-2 rounded-lg bg-dark-800/50 border border-green-500/10 text-green-100/70 text-xs hover:border-green-500/30 transition-colors">
+                            <i data-lucide="info" class="w-3 h-3"></i>تفاصيل
+                        </button>
+                    </div>
+                `;
+            } else {
+                // Paid/Free books: تحميل - تفاصيل only
+                buttons = `
+                    <div class="grid grid-cols-2 gap-2">
+                        <a href="${book.downloadUrl}" target="_blank" class="download-btn btn-primary flex items-center justify-center gap-1 px-2 py-2 rounded-lg text-dark-950 text-xs font-bold">
+                            <i data-lucide="download" class="w-3 h-3"></i>تحميل
+                        </a>
+                        <button onclick="showBookDetails('${book.id}')" class="flex items-center justify-center gap-1 px-2 py-2 rounded-lg bg-dark-800/50 border border-green-500/10 text-green-100/70 text-xs hover:border-green-500/30 transition-colors">
+                            <i data-lucide="info" class="w-3 h-3"></i>تفاصيل
+                        </button>
+                    </div>
+                `;
+            }
+            
             return `
             <div class="book-card rounded-xl p-5 stagger-item">
                 <div class="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center mb-3">
@@ -925,20 +1147,10 @@
                     <span class="flex items-center gap-1"><i data-lucide="user" class="w-3 h-3"></i>م. أحمد</span>
                 </div>
                 <div class="flex items-center justify-between mb-4">
-                    <span class="font-black text-xl text-green-400">${book.price} ج</span>
-                    <span class="px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 text-xs">مدفوع</span>
+                    ${priceDisplay}
+                    ${badge}
                 </div>
-                <div class="grid grid-cols-3 gap-2">
-                    <a href="${book.previewUrl}" target="_blank" class="flex items-center justify-center gap-1 px-2 py-2 rounded-lg bg-dark-800/50 border border-green-500/10 text-green-100/70 text-xs hover:border-green-500/30 transition-colors">
-                        <i data-lucide="eye" class="w-3 h-3"></i>معاينة
-                    </a>
-                    <button onclick="showBookDetails('${book.id}')" class="flex items-center justify-center gap-1 px-2 py-2 rounded-lg bg-dark-800/50 border border-green-500/10 text-green-100/70 text-xs hover:border-green-500/30 transition-colors">
-                        <i data-lucide="info" class="w-3 h-3"></i>تفاصيل
-                    </button>
-                    <a href="${book.downloadUrl}" target="_blank" class="download-btn btn-primary flex items-center justify-center gap-1 px-2 py-2 rounded-lg text-dark-950 text-xs font-bold">
-                        <i data-lucide="download" class="w-3 h-3"></i>تحميل
-                    </a>
-                </div>
+                ${buttons}
             </div>`;
         }
 
@@ -946,6 +1158,28 @@
             const b = booksData.find(x => x.id === id);
             if(!b) return;
             document.getElementById('modal-title').textContent = b.title;
+            
+            let priceInfo = '';
+            if (b.price > 0) {
+                priceInfo = `
+                    <div class="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-100/80 text-sm">السعر:</span>
+                            <span class="font-bold text-green-400 text-lg">${b.price} جنيه</span>
+                        </div>
+                    </div>
+                `;
+            } else if (b.note) {
+                priceInfo = `
+                    <div class="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-100/80 text-sm">السعر:</span>
+                            <span class="font-bold text-green-400 text-sm">${b.note}</span>
+                        </div>
+                    </div>
+                `;
+            }
+            
             document.getElementById('modal-body').innerHTML = `
                 <div class="space-y-3 mb-4">
                     ${b.details.map(d => `
@@ -957,12 +1191,7 @@
                         </div>
                     `).join('')}
                 </div>
-                <div class="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
-                    <div class="flex justify-between items-center">
-                        <span class="text-green-100/80 text-sm">السعر:</span>
-                        <span class="font-bold text-green-400 text-lg">${b.price} جنيه</span>
-                    </div>
-                </div>
+                ${priceInfo}
             `;
             const m = document.getElementById('details-modal');
             m.classList.remove('hidden'); 
@@ -1030,12 +1259,25 @@
             });
         }
 
+        // Populate books selection in form
+        function populateBooksSelection() {
+            const container = document.getElementById('books-selection');
+            const paidBooks = booksData.filter(b => b.type === 'مدفوع');
+            
+            container.innerHTML = paidBooks.map(b => `
+                <label class="flex items-center gap-3 cursor-pointer p-2 rounded-lg hover:bg-green-500/5 transition-colors">
+                    <input type="checkbox" name="selected-books" value="${b.id}" data-price="${b.price}" class="custom-checkbox" onchange="updateTotal()">
+                    <span class="text-green-100/80 text-sm flex-1">${b.title}</span>
+                    <span class="text-green-400 text-sm font-bold">${b.price} ج</span>
+                </label>
+            `).join('');
+        }
+
         // Update total price
         function updateTotal() {
             let total = 0;
-            document.querySelectorAll('input[name="books"]:checked').forEach(checkbox => {
-                if (checkbox.value.includes('80')) total += 80;
-                if (checkbox.value.includes('70')) total += 70;
+            document.querySelectorAll('input[name="selected-books"]:checked').forEach(checkbox => {
+                total += parseInt(checkbox.dataset.price) || 0;
             });
             document.getElementById('total-display').textContent = total + ' ج';
         }
@@ -1053,6 +1295,63 @@
                 };
                 reader.readAsDataURL(file);
             }
+        }
+
+        // Handle form submission - Send to WhatsApp
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('form-name').value.trim();
+            const email = document.getElementById('form-email').value.trim();
+            const phone = document.getElementById('form-phone').value.trim();
+            const notes = document.getElementById('form-notes').value.trim();
+            
+            // Get selected books
+            const selectedBooks = [];
+            let total = 0;
+            document.querySelectorAll('input[name="selected-books"]:checked').forEach(checkbox => {
+                const book = booksData.find(b => b.id === checkbox.value);
+                if (book) {
+                    selectedBooks.push(book.title);
+                    total += book.price;
+                }
+            });
+            
+            if (selectedBooks.length === 0) {
+                showToast('الرجاء اختيار كتاب واحد على الأقل', 'error');
+                return;
+            }
+            
+            // Build WhatsApp message
+            let message = `طلب جديد - كتب البرمجة\n`;
+            message += `━━━━━━━━━━━━━━━\n`;
+            message += `👤 الاسم: ${name}\n`;
+            message += `📧 البريد الإلكتروني: ${email}\n`;
+            message += `📱 رقم الهاتف: ${phone}\n`;
+            message += `━━━━━━━━━━━━━━━\n`;
+            message += `📚 الكتب المطلوبة:\n`;
+            selectedBooks.forEach((book, i) => {
+                message += `   ${i + 1}. ${book}\n`;
+            });
+            message += `━━━━━━━━━━━━━━━\n`;
+            message += `💰 إجمالي المبلغ: ${total} جنيه\n`;
+            
+            if (notes) {
+                message += `━━━━━━━━━━━━━━━\n`;
+                message += `📝 ملاحظات: ${notes}\n`;
+            }
+            
+            message += `━━━━━━━━━━━━━━━\n`;
+            message += `📎 إيصال التحويل: مرفق بالرسالة`;
+            
+            // Encode message for URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Open WhatsApp
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
+            
+            showToast('جاري فتح واتساب...', 'success');
         }
 
         // Hash change
